@@ -60,4 +60,5 @@ jump={
 [physics]
 
 3d/physics_engine="Jolt Physics"
+3d/default_gravity=19.6
 common/physics_interpolation=true

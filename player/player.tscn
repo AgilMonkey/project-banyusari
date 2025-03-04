@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://dgj5e4tlh6l65"]
+[gd_scene load_steps=10 format=3 uid="uid://dgj5e4tlh6l65"]
 
+[ext_resource type="Script" uid="uid://bmhwonbtsjfg" path="res://player/player.gd" id="1_qjkh3"]
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
 [ext_resource type="Script" uid="uid://8t1puph1nn0n" path="res://player/third_person_movement_rigidbody.gd" id="2_rkbax"]
 [ext_resource type="Script" uid="uid://pq1j7fjytppm" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_yw30f"]
@@ -19,6 +20,9 @@ uv1_triplanar = true
 [node name="Player" type="RigidBody3D"]
 physics_material_override = SubResource("PhysicsMaterial_yw30f")
 lock_rotation = true
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_qjkh3")
 
 [node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
 transform = Transform3D(0.999995, 0, 0, 0, 0.999999, 0, 0, 0, 0.999995, 0, 3, 7.99996)

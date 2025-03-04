@@ -16,7 +16,7 @@ func _input(event: InputEvent) -> void:
 	input_dir.x = Input.get_axis("move_left", "move_right")
 	input_dir = input_dir.normalized()
 	
-	if Input.is_action_just_pressed("jump"):
+	if Input.is_action_just_pressed("jump") and rb.on_floor:
 		rb.apply_impulse(Vector3.UP * jump_force)
 
 
