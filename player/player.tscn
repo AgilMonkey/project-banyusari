@@ -5,11 +5,12 @@
 [ext_resource type="Script" uid="uid://pq1j7fjytppm" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_yw30f"]
 [ext_resource type="Script" uid="uid://bur14kb6xyx8y" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_qjkh3"]
 
-[sub_resource type="Resource" id="Resource_g6k8r"]
+[sub_resource type="Resource" id="Resource_yw30f"]
 script = ExtResource("4_qjkh3")
-duration = 1.0
+duration = 0.0
 transition = 0
 ease = 2
+metadata/_custom_type_script = "uid://bur14kb6xyx8y"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ehsmr"]
 
@@ -20,13 +21,19 @@ uv1_triplanar = true
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ehsmr"]
 
 [node name="Player" type="RigidBody3D"]
+lock_rotation = true
 
-[node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 6)
+[node name="CameraTarget" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
+
+[node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("follow_target", "look_at_target")]
+transform = Transform3D(0.999995, 0, 0, 0, 0.99837, 0.0570495, 0, -0.0570497, 0.998366, 0, 2.05705, 5.99837)
 script = ExtResource("3_yw30f")
 follow_mode = 6
 follow_target = NodePath("..")
-tween_resource = SubResource("Resource_g6k8r")
+look_at_mode = 2
+look_at_target = NodePath("../CameraTarget")
+tween_resource = SubResource("Resource_yw30f")
 follow_offset = Vector3(0, 2, 5)
 metadata/_custom_type_script = "uid://pq1j7fjytppm"
 
