@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dgj5e4tlh6l65"]
+[gd_scene load_steps=6 format=3 uid="uid://dgj5e4tlh6l65"]
 
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
+[ext_resource type="Script" uid="uid://8t1puph1nn0n" path="res://player/third_person_movement.gd" id="2_rkbax"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ehsmr"]
 
@@ -12,9 +13,15 @@ uv1_triplanar = true
 
 [node name="Player" type="CharacterBody3D"]
 
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5)
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_ehsmr")
 
 [node name="Gfx" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_3c3w1")
 mesh = SubResource("CapsuleMesh_ehsmr")
+
+[node name="ThirdPersonMovement" type="Node" parent="."]
+script = ExtResource("2_rkbax")

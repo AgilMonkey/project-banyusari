@@ -12,8 +12,14 @@ config_version=5
 
 config/name="Projek Banyusari"
 config/version="0.1"
+run/main_scene="uid://oab2qeo6wun8"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
 
 [physics]
 
