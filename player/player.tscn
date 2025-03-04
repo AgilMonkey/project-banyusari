@@ -20,9 +20,6 @@ uv1_triplanar = true
 physics_material_override = SubResource("PhysicsMaterial_yw30f")
 lock_rotation = true
 
-[node name="CameraTarget" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
-
 [node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
 transform = Transform3D(0.999995, 0, 0, 0, 0.999999, 0, 0, 0, 0.999995, 0, 3, 7.99996)
 script = ExtResource("3_yw30f")

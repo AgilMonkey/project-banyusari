@@ -1,7 +1,7 @@
 extends Node
 
 
-var mouse_sensitivity: float = 1.0
+var mouse_sensitivity: float = 0.5
 
 var min_yaw: float = 0
 var max_yaw: float = 360
@@ -12,7 +12,17 @@ var max_pitch: float = 50
 @onready var pcam: PhantomCamera3D = get_parent()
 
 
+func _ready() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+
 func _input(event) -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
 	# Trigger whenever the mouse moves.
 	if event is InputEventMouseMotion:
 		var pcam_rotation_degrees: Vector3
