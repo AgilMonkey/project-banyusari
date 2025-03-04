@@ -7,7 +7,7 @@ var min_yaw: float = 0
 var max_yaw: float = 360
 
 var min_pitch: float = -89.9
-var max_pitch: float = 50
+var max_pitch: float = 80.0
 
 @onready var pcam: PhantomCamera3D = get_parent()
 
