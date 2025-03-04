@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://dgj5e4tlh6l65"]
+[gd_scene load_steps=11 format=3 uid="uid://dgj5e4tlh6l65"]
 
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
 [ext_resource type="Script" uid="uid://8t1puph1nn0n" path="res://player/third_person_movement_rigidbody.gd" id="2_rkbax"]
 [ext_resource type="Script" uid="uid://pq1j7fjytppm" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_yw30f"]
 [ext_resource type="Script" uid="uid://bur14kb6xyx8y" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_qjkh3"]
+[ext_resource type="Script" uid="uid://cepd773a2q6e8" path="res://player/third_person_phantom_camera_control.gd" id="5_qjkh3"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yw30f"]
 friction = 0.0
@@ -50,3 +51,6 @@ mesh = SubResource("CapsuleMesh_ehsmr")
 
 [node name="ThirdPersonMovementRigidbody" type="Node" parent="."]
 script = ExtResource("2_rkbax")
+
+[node name="ThirdPersonPhantomCameraControl" type="Node" parent="."]
+script = ExtResource("5_qjkh3")
