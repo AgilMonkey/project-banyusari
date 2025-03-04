@@ -11,5 +11,6 @@ config_version=5
 [application]
 
 config/name="Projek Banyusari"
+config/version="0.1"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
