@@ -1,10 +1,10 @@
 extends Node
 
 
-var mouse_sensitivity: float = 0.3
+var mouse_sensitivity: float = 0.1
 
 var min_yaw: float = 0
-var max_yaw: float = 362
+var max_yaw: float = 360
 
 var min_pitch: float = -70.0
 var max_pitch: float = 80.0
