@@ -12,6 +12,7 @@ func _input(event: InputEvent) -> void:
 	input_dir.z = Input.get_axis("move_forward", "move_backward")
 	input_dir.x = Input.get_axis("move_left", "move_right")
 	input_dir = input_dir.normalized()
+	print(input_dir)
 
 
 func _process(delta: float) -> void:

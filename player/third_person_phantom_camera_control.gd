@@ -1,7 +1,7 @@
 extends Node
 
 
-var mouse_sensitivity: float = 2.0
+var mouse_sensitivity: float = 1.0
 
 var min_yaw: float = 0
 var max_yaw: float = 360
