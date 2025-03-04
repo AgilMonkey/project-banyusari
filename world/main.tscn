@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://oab2qeo6wun8"]
+[gd_scene load_steps=8 format=3 uid="uid://oab2qeo6wun8"]
 
+[ext_resource type="Script" uid="uid://dtgpw3jw3mf1s" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_4f7fj"]
 [ext_resource type="Texture2D" uid="uid://dgbqyo2d0uqc" path="res://assets/kenney_prototype_textures/PNG/Orange/texture_09.png" id="1_gjxf3"]
 [ext_resource type="PackedScene" uid="uid://dgj5e4tlh6l65" path="res://player/player.tscn" id="2_hyim0"]
 
@@ -23,6 +24,16 @@ tonemap_mode = 2
 glow_enabled = true
 
 [node name="Main" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+physics_interpolation_mode = 1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="PhantomCameraHost" type="Node" parent="Camera3D"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("1_4f7fj")
+metadata/_custom_type_script = "uid://dtgpw3jw3mf1s"
 
 [node name="Player" parent="." instance=ExtResource("2_hyim0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)

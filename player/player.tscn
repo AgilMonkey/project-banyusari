@@ -1,7 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://dgj5e4tlh6l65"]
+[gd_scene load_steps=9 format=3 uid="uid://dgj5e4tlh6l65"]
 
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
 [ext_resource type="Script" uid="uid://8t1puph1nn0n" path="res://player/third_person_movement_rigidbody.gd" id="2_rkbax"]
+[ext_resource type="Script" uid="uid://pq1j7fjytppm" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_yw30f"]
+[ext_resource type="Script" uid="uid://bur14kb6xyx8y" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_qjkh3"]
+
+[sub_resource type="Resource" id="Resource_g6k8r"]
+script = ExtResource("4_qjkh3")
+duration = 1.0
+transition = 0
+ease = 2
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ehsmr"]
 
@@ -13,9 +21,14 @@ uv1_triplanar = true
 
 [node name="Player" type="RigidBody3D"]
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5)
-current = true
+[node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 6)
+script = ExtResource("3_yw30f")
+follow_mode = 6
+follow_target = NodePath("..")
+tween_resource = SubResource("Resource_g6k8r")
+follow_offset = Vector3(0, 2, 5)
+metadata/_custom_type_script = "uid://pq1j7fjytppm"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_ehsmr")
