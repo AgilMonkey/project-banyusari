@@ -15,7 +15,6 @@ func _input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
-	print(cur_camera)
 	rb.linear_damp = 0.0
 	if input_dir.length_squared() == 0:
 		rb.linear_damp = 10.0
