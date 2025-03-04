@@ -4,11 +4,8 @@ extends Node
 @export var speed := 10
 var input_dir: Vector3
 
-var rb: RigidBody3D
-
-
-func _ready() -> void:
-	rb = get_parent()
+@onready var rb: RigidBody3D = get_parent()
+@onready var cur_camera: Camera3D = get_viewport().get_camera_3d()
 
 
 func _input(event: InputEvent) -> void:
@@ -18,6 +15,7 @@ func _input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
+	print(cur_camera)
 	rb.linear_damp = 0.0
 	if input_dir.length_squared() == 0:
 		rb.linear_damp = 10.0

@@ -1,20 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://dgj5e4tlh6l65"]
+[gd_scene load_steps=9 format=3 uid="uid://dgj5e4tlh6l65"]
 
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
 [ext_resource type="Script" uid="uid://8t1puph1nn0n" path="res://player/third_person_movement_rigidbody.gd" id="2_rkbax"]
 [ext_resource type="Script" uid="uid://pq1j7fjytppm" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_yw30f"]
-[ext_resource type="Script" uid="uid://bur14kb6xyx8y" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_qjkh3"]
 [ext_resource type="Script" uid="uid://cepd773a2q6e8" path="res://player/third_person_phantom_camera_control.gd" id="5_qjkh3"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yw30f"]
 friction = 0.0
-
-[sub_resource type="Resource" id="Resource_yw30f"]
-script = ExtResource("4_qjkh3")
-duration = 0.0
-transition = 0
-ease = 2
-metadata/_custom_type_script = "uid://bur14kb6xyx8y"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ehsmr"]
 
@@ -31,16 +23,18 @@ lock_rotation = true
 [node name="CameraTarget" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
 
-[node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("follow_target", "look_at_target")]
-transform = Transform3D(0.999995, 0, 0, 0, 0.99837, 0.0570495, 0, -0.0570497, 0.998366, 0, 2.05705, 5.99837)
+[node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
+transform = Transform3D(0.999995, 0, 0, 0, 0.999999, 0, 0, 0, 0.999995, 0, 0, 4.99997)
 script = ExtResource("3_yw30f")
 follow_mode = 6
 follow_target = NodePath("..")
-look_at_mode = 2
-look_at_target = NodePath("../CameraTarget")
-tween_resource = SubResource("Resource_yw30f")
-follow_offset = Vector3(0, 2, 5)
+tween_on_load = false
+follow_distance = 5.0
+spring_length = 5.0
 metadata/_custom_type_script = "uid://pq1j7fjytppm"
+
+[node name="ThirdPersonPhantomCameraControl" type="Node" parent="PhantomCamera3D"]
+script = ExtResource("5_qjkh3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_ehsmr")
@@ -51,6 +45,3 @@ mesh = SubResource("CapsuleMesh_ehsmr")
 
 [node name="ThirdPersonMovementRigidbody" type="Node" parent="."]
 script = ExtResource("2_rkbax")
-
-[node name="ThirdPersonPhantomCameraControl" type="Node" parent="."]
-script = ExtResource("5_qjkh3")

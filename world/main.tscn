@@ -25,11 +25,12 @@ glow_enabled = true
 
 [node name="Main" type="Node3D"]
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="MainCamera" type="Camera3D" parent="."]
 physics_interpolation_mode = 1
-transform = Transform3D(1, 0, 0, 0, 0.998371, 0.0570498, 0, -0.0570498, 0.998371, 0, 3.55705, 5.99837)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 4.99997)
+near = 0.001
 
-[node name="PhantomCameraHost" type="Node" parent="Camera3D"]
+[node name="PhantomCameraHost" type="Node" parent="MainCamera"]
 process_priority = 300
 process_physics_priority = 300
 script = ExtResource("1_4f7fj")
