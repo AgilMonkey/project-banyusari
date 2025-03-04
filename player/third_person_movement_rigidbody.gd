@@ -1,7 +1,7 @@
 extends Node
 
 
-@export var speed := 50
+@export var speed := 20
 var input_dir: Vector3
 
 var rb: RigidBody3D

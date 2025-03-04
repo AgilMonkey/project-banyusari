@@ -41,7 +41,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 [node name="Ground" type="CSGBox3D" parent="."]
 material_override = SubResource("StandardMaterial3D_hyim0")
 use_collision = true
-size = Vector3(30, 1, 30)
+size = Vector3(100, 1, 100)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_spvjk")
