@@ -1,9 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://dgj5e4tlh6l65"]
+[gd_scene load_steps=10 format=3 uid="uid://dgj5e4tlh6l65"]
 
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
 [ext_resource type="Script" uid="uid://8t1puph1nn0n" path="res://player/third_person_movement_rigidbody.gd" id="2_rkbax"]
 [ext_resource type="Script" uid="uid://pq1j7fjytppm" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_yw30f"]
 [ext_resource type="Script" uid="uid://bur14kb6xyx8y" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_qjkh3"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yw30f"]
+friction = 0.0
 
 [sub_resource type="Resource" id="Resource_yw30f"]
 script = ExtResource("4_qjkh3")
@@ -21,8 +24,8 @@ uv1_triplanar = true
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ehsmr"]
 
 [node name="Player" type="RigidBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_yw30f")
 lock_rotation = true
-linear_damp = 1.5
 
 [node name="CameraTarget" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
