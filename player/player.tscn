@@ -25,14 +25,14 @@ max_contacts_reported = 1
 script = ExtResource("1_qjkh3")
 
 [node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
-transform = Transform3D(0.999995, 0, 0, 0, 0.999999, 0, 0, 0, 0.999995, 0, 3, 7.99996)
+transform = Transform3D(0.999995, 0, 0, 0, 0.999999, 0, 0, 0, 0.999995, 0, 2, 6.99996)
 script = ExtResource("3_yw30f")
 follow_mode = 6
 follow_target = NodePath("..")
 tween_on_load = false
-follow_offset = Vector3(0, 3, 0)
-follow_distance = 8.0
-spring_length = 8.0
+follow_offset = Vector3(0, 2, 0)
+follow_distance = 7.0
+spring_length = 7.0
 metadata/_custom_type_script = "uid://pq1j7fjytppm"
 
 [node name="ThirdPersonPhantomCameraControl" type="Node" parent="PhantomCamera3D"]

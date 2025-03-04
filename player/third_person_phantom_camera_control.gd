@@ -6,7 +6,7 @@ var mouse_sensitivity: float = 0.3
 var min_yaw: float = 0
 var max_yaw: float = 362
 
-var min_pitch: float = -89.9
+var min_pitch: float = -70.0
 var max_pitch: float = 80.0
 
 @onready var pcam: PhantomCamera3D = get_parent()

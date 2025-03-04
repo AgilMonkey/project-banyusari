@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://oab2qeo6wun8"]
+[gd_scene load_steps=9 format=3 uid="uid://oab2qeo6wun8"]
 
 [ext_resource type="Script" uid="uid://dtgpw3jw3mf1s" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_4f7fj"]
 [ext_resource type="Texture2D" uid="uid://dgbqyo2d0uqc" path="res://assets/kenney_prototype_textures/PNG/Orange/texture_09.png" id="1_gjxf3"]
 [ext_resource type="PackedScene" uid="uid://dgj5e4tlh6l65" path="res://player/player.tscn" id="2_hyim0"]
+[ext_resource type="Texture2D" uid="uid://bapad1648y2bc" path="res://assets/kenney_crosshair_pack/PNG/Outline/crosshair013.png" id="4_spvjk"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hyim0"]
 albedo_texture = ExtResource("1_gjxf3")
@@ -27,7 +28,7 @@ glow_enabled = true
 
 [node name="MainCamera" type="Camera3D" parent="."]
 physics_interpolation_mode = 1
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 4.99997)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 7.99996)
 near = 0.001
 
 [node name="PhantomCameraHost" type="Node" parent="MainCamera"]
@@ -42,7 +43,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 [node name="Ground" type="CSGBox3D" parent="."]
 material_override = SubResource("StandardMaterial3D_hyim0")
 use_collision = true
-size = Vector3(100, 1, 100)
+size = Vector3(500, 1, 500)
+
+[node name="Ground2" type="CSGBox3D" parent="."]
+material_override = SubResource("StandardMaterial3D_hyim0")
+use_collision = true
+size = Vector3(500, 1, 500)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_spvjk")
@@ -50,3 +56,30 @@ environment = SubResource("Environment_spvjk")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Crosshair" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_lock_ = true
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Crosshair"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_spvjk")
