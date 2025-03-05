@@ -1,0 +1,97 @@
+[gd_scene load_steps=8 format=3 uid="uid://oab2qeo6wun8"]
+
+[ext_resource type="Script" uid="uid://dtgpw3jw3mf1s" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_4f7fj"]
+[ext_resource type="PackedScene" uid="uid://dgj5e4tlh6l65" path="res://player/player.tscn" id="2_hyim0"]
+[ext_resource type="Material" uid="uid://dhck6fgl1nw1o" path="res://world/ground.tres" id="3_spvjk"]
+[ext_resource type="Texture2D" uid="uid://bapad1648y2bc" path="res://assets/kenney_crosshair_pack/PNG/Outline/crosshair013.png" id="4_spvjk"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hyim0"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_4f7fj"]
+sky_material = SubResource("ProceduralSkyMaterial_hyim0")
+
+[sub_resource type="Environment" id="Environment_spvjk"]
+background_mode = 2
+sky = SubResource("Sky_4f7fj")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Main" type="Node3D"]
+
+[node name="MainCamera" type="Camera3D" parent="."]
+physics_interpolation_mode = 1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 6.99996)
+near = 0.001
+
+[node name="PhantomCameraHost" type="Node" parent="MainCamera"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("1_4f7fj")
+metadata/_custom_type_script = "uid://dtgpw3jw3mf1s"
+
+[node name="Player" parent="." instance=ExtResource("2_hyim0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Level" type="CSGCombiner3D" parent="."]
+material_override = ExtResource("3_spvjk")
+use_collision = true
+
+[node name="Ground2" type="CSGBox3D" parent="Level"]
+use_collision = true
+size = Vector3(500, 1, 500)
+
+[node name="Ground3" type="CSGBox3D" parent="Level"]
+transform = Transform3D(-0.310643, 0, -0.950527, 0, 1, 0, 0.950527, 0, -0.310643, -17.1364, 5, -22.1791)
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="Ground4" type="CSGBox3D" parent="Level"]
+transform = Transform3D(-0.310643, 0, -0.950527, 0, 1, 0, 0.950527, 0, -0.310643, -20.0153, 5, 29.4434)
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="Ground5" type="CSGBox3D" parent="Level"]
+transform = Transform3D(-0.310643, 0, -0.950527, 0, 1, 0, 0.950527, 0, -0.310643, 14.4219, 5, -20.6101)
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="Ground6" type="CSGBox3D" parent="Level"]
+transform = Transform3D(-0.310643, 0, -0.950527, 0, 1, 0, 0.950527, 0, -0.310643, 26.5107, 5, 16.7754)
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_spvjk")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Crosshair" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_lock_ = true
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Crosshair"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_spvjk")

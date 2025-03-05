@@ -1,0 +1,57 @@
+[gd_scene load_steps=12 format=3 uid="uid://dgj5e4tlh6l65"]
+
+[ext_resource type="Script" uid="uid://bmhwonbtsjfg" path="res://player/player.gd" id="1_qjkh3"]
+[ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
+[ext_resource type="Script" uid="uid://8t1puph1nn0n" path="res://player/third_person_movement_rigidbody.gd" id="2_rkbax"]
+[ext_resource type="Script" uid="uid://bur14kb6xyx8y" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_g6k8r"]
+[ext_resource type="Script" uid="uid://pq1j7fjytppm" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_yw30f"]
+[ext_resource type="Script" uid="uid://cepd773a2q6e8" path="res://player/third_person_phantom_camera_control.gd" id="5_qjkh3"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yw30f"]
+friction = 0.0
+
+[sub_resource type="Resource" id="Resource_boad6"]
+script = ExtResource("3_g6k8r")
+duration = 1.0
+transition = 0
+ease = 2
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ehsmr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3c3w1"]
+albedo_texture = ExtResource("1_ulp21")
+uv1_triplanar = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ehsmr"]
+
+[node name="Player" type="RigidBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_yw30f")
+lock_rotation = true
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_qjkh3")
+
+[node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
+transform = Transform3D(0.999995, 0, 0, 0, 0.999999, 0, 0, 0, 0.999995, 0, 2, 6.99996)
+script = ExtResource("3_yw30f")
+follow_mode = 6
+follow_target = NodePath("..")
+tween_resource = SubResource("Resource_boad6")
+tween_on_load = false
+follow_offset = Vector3(0, 2, 0)
+follow_distance = 7.0
+spring_length = 7.0
+metadata/_custom_type_script = "uid://pq1j7fjytppm"
+
+[node name="ThirdPersonPhantomCameraControl" type="Node" parent="PhantomCamera3D"]
+script = ExtResource("5_qjkh3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ehsmr")
+
+[node name="Gfx" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_3c3w1")
+mesh = SubResource("CapsuleMesh_ehsmr")
+
+[node name="ThirdPersonMovementRigidbody" type="Node" parent="."]
+script = ExtResource("2_rkbax")
