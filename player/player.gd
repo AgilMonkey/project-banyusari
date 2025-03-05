@@ -10,6 +10,8 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	while i < state.get_contact_count():
 		var normal := state.get_contact_local_normal(i)
 		on_floor = normal.dot(Vector3.UP) > 0.98 # this can be dialed in
+		if on_floor:
+			break
 		#  1.0 would be perfectly straight up
 		#  0.0 is a wall
 		# -1.0 is a ceiling

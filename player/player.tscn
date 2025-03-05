@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dgj5e4tlh6l65"]
+[gd_scene load_steps=13 format=3 uid="uid://dgj5e4tlh6l65"]
 
 [ext_resource type="Script" uid="uid://bmhwonbtsjfg" path="res://player/player.gd" id="1_qjkh3"]
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
@@ -16,6 +16,8 @@ duration = 1.0
 transition = 0
 ease = 2
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_g6k8r"]
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ehsmr"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3c3w1"]
@@ -28,7 +30,8 @@ uv1_triplanar = true
 physics_material_override = SubResource("PhysicsMaterial_yw30f")
 lock_rotation = true
 contact_monitor = true
-max_contacts_reported = 1
+max_contacts_reported = 5
+linear_damp = 0.1
 script = ExtResource("1_qjkh3")
 
 [node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
@@ -41,6 +44,8 @@ tween_on_load = false
 follow_offset = Vector3(0, 2, 0)
 follow_distance = 7.0
 spring_length = 7.0
+shape = SubResource("SphereShape3D_g6k8r")
+margin = 0.1
 metadata/_custom_type_script = "uid://pq1j7fjytppm"
 
 [node name="ThirdPersonPhantomCameraControl" type="Node" parent="PhantomCamera3D"]
