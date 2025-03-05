@@ -1,7 +1,8 @@
 extends Node
 
 
-@export var acceleration := 35.0
+@export var acceleration := 45.0
+#@export var turn_acceleration := 40.0
 
 @export var jump_force := 12.0
 
@@ -33,6 +34,8 @@ func _physics_process(delta: float) -> void:
 	var vel_horizontal = Vector3(rb.linear_velocity.x, 0, rb.linear_velocity.z)
 	if vel_horizontal.length() > 15.0:
 		rb.apply_force(-vel_horizontal.normalized() * acceleration)
+	
+	#rb.rotate
 
 
 func jump():
