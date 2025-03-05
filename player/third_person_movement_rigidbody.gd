@@ -13,8 +13,9 @@ var jumped := false
 
 
 func _input(event: InputEvent) -> void:
-	input_dir.z = Input.get_axis("move_forward", "move_backward")
+	# Controller
 	input_dir.x = Input.get_axis("move_left", "move_right")
+	input_dir.z = Input.get_axis("move_forward", "move_backward")
 	input_dir = input_dir.normalized()
 	
 	if Input.is_action_just_pressed("jump") and rb.on_floor:
