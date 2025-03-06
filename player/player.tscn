@@ -1,13 +1,20 @@
-[gd_scene load_steps=10 format=3 uid="uid://dgj5e4tlh6l65"]
+[gd_scene load_steps=12 format=3 uid="uid://dgj5e4tlh6l65"]
 
 [ext_resource type="Script" uid="uid://bmhwonbtsjfg" path="res://player/player.gd" id="1_qjkh3"]
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
 [ext_resource type="Script" uid="uid://8t1puph1nn0n" path="res://player/third_person_movement_rigidbody.gd" id="2_rkbax"]
+[ext_resource type="Script" uid="uid://bur14kb6xyx8y" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_g6k8r"]
 [ext_resource type="Script" uid="uid://pq1j7fjytppm" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_yw30f"]
-[ext_resource type="Script" uid="uid://cepd773a2q6e8" path="res://player/third_person_phantom_camera_control.gd" id="5_qjkh3"]
+[ext_resource type="Script" uid="uid://ba6i3324bwauo" path="res://player/3d_camera_controller.gd" id="4_g6k8r"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yw30f"]
 friction = 0.0
+
+[sub_resource type="Resource" id="Resource_boad6"]
+script = ExtResource("3_g6k8r")
+duration = 1.0
+transition = 0
+ease = 2
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ehsmr"]
 radius = 0.52
@@ -26,19 +33,25 @@ max_contacts_reported = 5
 linear_damp = 0.1
 script = ExtResource("1_qjkh3")
 
-[node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
-transform = Transform3D(0.999995, 0, 0, 0, 0.999999, 0, 0, 0, 0.999995, 0, 2, 6.99996)
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.8, 0)
+spring_length = 8.0
+
+[node name="PhantomCamera3D" type="Node3D" parent="Pivot/SpringArm3D"]
+transform = Transform3D(1.00006, -3.5083e-14, 1.38581e-06, -2.22045e-15, 1, -7.45058e-08, -2.35438e-06, -1.49021e-08, 1.00006, 0, 0, 0)
 script = ExtResource("3_yw30f")
-follow_mode = 6
-follow_target = NodePath("..")
+tween_resource = SubResource("Resource_boad6")
 tween_on_load = false
-follow_offset = Vector3(0, 2, 0)
-follow_distance = 7.0
-spring_length = 7.0
+follow_offset = Vector3(2, 0.8, 0)
+follow_damping_value = Vector3(0.05, 0.05, 0.05)
+follow_distance = 8.0
+spring_length = 8.0
 metadata/_custom_type_script = "uid://pq1j7fjytppm"
 
-[node name="ThirdPersonPhantomCameraControl" type="Node" parent="PhantomCamera3D"]
-script = ExtResource("5_qjkh3")
+[node name="3DCameraController" type="Node" parent="Pivot"]
+script = ExtResource("4_g6k8r")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_ehsmr")
