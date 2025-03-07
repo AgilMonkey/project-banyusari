@@ -89,4 +89,5 @@ script = ExtResource("2_rkbax")
 
 [node name="Circle" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.49028, 0, 0)
+visible = false
 mesh = SubResource("SphereMesh_rgyib")
