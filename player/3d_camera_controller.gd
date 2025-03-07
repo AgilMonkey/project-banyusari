@@ -2,7 +2,7 @@ extends Node
 
 
 var mouse_sensitivity: float = 0.1
-var other_sensitivity: float = 2.0
+var other_sensitivity: float = 0.5
 
 var min_yaw: float = 0
 var max_yaw: float = 360
@@ -49,7 +49,7 @@ func _process(delta: float) -> void:
 	if look_direction:
 		var pcam_rotation_degrees: Vector3
 		# Assigns the current 3D rotation of the SpringArm3D node - to start off where it is in the editor.
-		pcam_rotation_degrees = target.spring
+		pcam_rotation_degrees = target.rotation_degrees
 		# Change the X rotation.
 		pcam_rotation_degrees.x += look_direction.y * other_sensitivity
 		# Clamp the rotation in the X axis so it can go over or under the target.
