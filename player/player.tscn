@@ -1,11 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://dgj5e4tlh6l65"]
+[gd_scene load_steps=17 format=3 uid="uid://dgj5e4tlh6l65"]
 
 [ext_resource type="Script" uid="uid://bmhwonbtsjfg" path="res://player/player.gd" id="1_qjkh3"]
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
+[ext_resource type="Script" uid="uid://ubkolvwgwumg" path="res://player/shoot_projectile_to_camera.gd" id="2_rgyib"]
 [ext_resource type="Script" uid="uid://8t1puph1nn0n" path="res://player/third_person_movement_rigidbody.gd" id="2_rkbax"]
 [ext_resource type="Script" uid="uid://bur14kb6xyx8y" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_g6k8r"]
 [ext_resource type="Script" uid="uid://pq1j7fjytppm" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_yw30f"]
 [ext_resource type="Script" uid="uid://ba6i3324bwauo" path="res://player/3d_camera_controller.gd" id="4_g6k8r"]
+[ext_resource type="Texture2D" uid="uid://dgbqyo2d0uqc" path="res://assets/kenney_prototype_textures/PNG/Orange/texture_09.png" id="6_boad6"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yw30f"]
 friction = 0.0
@@ -25,6 +27,17 @@ uv1_triplanar = true
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ehsmr"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rgyib"]
+albedo_color = Color(0.643112, 0, 0.189193, 1)
+albedo_texture = ExtResource("6_boad6")
+uv1_triplanar = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_g6k8r"]
+radius = 0.1805
+height = 0.416
+
+[sub_resource type="SphereMesh" id="SphereMesh_rgyib"]
+
 [node name="Player" type="RigidBody3D"]
 physics_material_override = SubResource("PhysicsMaterial_yw30f")
 lock_rotation = true
@@ -34,6 +47,13 @@ linear_damp = 0.1
 script = ExtResource("1_qjkh3")
 
 [node name="Pivot" type="Node3D" parent="."]
+
+[node name="Bow" type="Node3D" parent="Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.72584, 0.217706, 0.0625076)
+
+[node name="ShootProjectileToCamera" type="Node" parent="Pivot/Bow" node_paths=PackedStringArray("ball")]
+script = ExtResource("2_rgyib")
+ball = NodePath("../../../Circle")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="Pivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.8, 0)
@@ -60,5 +80,16 @@ shape = SubResource("CapsuleShape3D_ehsmr")
 material_override = SubResource("StandardMaterial3D_3c3w1")
 mesh = SubResource("CapsuleMesh_ehsmr")
 
+[node name="ForwardHead" type="MeshInstance3D" parent="Gfx"]
+transform = Transform3D(-4.37114e-08, -1.73433, 0, 1, -7.58099e-08, 0, 0, 0, 1, -1.04476e-08, 0.488153, -0.46743)
+visible = false
+material_override = SubResource("StandardMaterial3D_rgyib")
+mesh = SubResource("CapsuleMesh_g6k8r")
+
 [node name="ThirdPersonMovementRigidbody" type="Node" parent="."]
 script = ExtResource("2_rkbax")
+
+[node name="Circle" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.49028, 0, 0)
+visible = false
+mesh = SubResource("SphereMesh_rgyib")

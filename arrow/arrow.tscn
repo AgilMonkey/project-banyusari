@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://duemupw1p28ta"]
+
+[ext_resource type="Script" uid="uid://bphyn64ophapi" path="res://arrow/arrow.gd" id="1_jp72l"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l4sal"]
+albedo_color = Color(1, 0.0333334, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_l4sal"]
+top_radius = 0.01
+bottom_radius = 0.05
+height = 1.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l4sal"]
+radius = 0.2
+height = 1.2
+
+[node name="Arrow" type="RigidBody3D"]
+mass = 0.2
+script = ExtResource("1_jp72l")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_l4sal")
+mesh = SubResource("CylinderMesh_l4sal")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_l4sal")
