@@ -18,3 +18,14 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 		#  0.0 is a wall
 		# -1.0 is a ceiling
 		i += 1
+
+
+func disable_player():
+	enable_input(self, false)
+	freeze = true
+
+
+func enable_input(node, enable):
+	node.set_process_input(enable)
+	for n in node.get_children():
+		enable_input(n, enable)

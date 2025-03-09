@@ -17,6 +17,7 @@ func _input(event: InputEvent) -> void:
 
 func game_over():
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	player.disable_player()
 	$CanvasLayer/UI/RestartUI.show()
 
 
