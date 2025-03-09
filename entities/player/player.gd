@@ -22,7 +22,6 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 
 func disable_player():
 	enable_input(self, false)
-	freeze = true
 
 
 func enable_input(node, enable):

@@ -24,6 +24,9 @@ func _input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if not is_processing_input():
+		input_disabled()
+	
 	if input_dir.length() < 0.1:
 		stop_force(delta)
 	
@@ -71,3 +74,7 @@ func stop_force(delta):
 	var vel_to_zero_horizontal = Vector3(vel_to_zero.x, 0, vel_to_zero.z).normalized()
 	var force = vel_to_zero_horizontal * clampf(vel_mag/5.0, 0, 1) * 15.0 * 3.0
 	rb.apply_force(force)
+
+
+func input_disabled():
+	input_dir = Vector3.ZERO
