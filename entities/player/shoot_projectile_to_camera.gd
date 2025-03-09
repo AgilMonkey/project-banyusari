@@ -6,7 +6,7 @@ extends Node3D
 var inp_hold_bow := false
 var bow_hold_t := 0.0
 
-@onready var projectile = preload("res://arrow/arrow.tscn")
+@onready var projectile = preload("uid://duemupw1p28ta")
 @onready var camera = get_viewport().get_camera_3d()
 @onready var main_scene = Utility.find_type(get_tree().get_root(), Node3D)
 

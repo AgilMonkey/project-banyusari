@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqclp63tjk7j0"]
+
+[ext_resource type="Script" uid="uid://ddj8v4bf4tldd" path="res://commons/ui/restart_ui/restart_ui.gd" id="1_28152"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jrl1y"]
+font_size = 32
+
+[node name="RestartUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_28152")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Game Over"
+label_settings = SubResource("LabelSettings_jrl1y")
+
+[node name="RestartButton" type="Button" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 25
+text = "Restart"
+
+[connection signal="pressed" from="PanelContainer/HBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]

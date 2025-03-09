@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://oab2qeo6wun8"]
+[gd_scene load_steps=11 format=3 uid="uid://oab2qeo6wun8"]
 
 [ext_resource type="Script" uid="uid://dtgpw3jw3mf1s" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_4f7fj"]
+[ext_resource type="Script" uid="uid://4o8nlvikwlhg" path="res://world/main.gd" id="1_gu74f"]
 [ext_resource type="PackedScene" uid="uid://dgj5e4tlh6l65" path="res://entities/player/player.tscn" id="2_hyim0"]
 [ext_resource type="Material" uid="uid://dhck6fgl1nw1o" path="res://world/ground.tres" id="3_spvjk"]
 [ext_resource type="Texture2D" uid="uid://bapad1648y2bc" path="res://assets/kenney_crosshair_pack/PNG/Outline/crosshair013.png" id="4_spvjk"]
-[ext_resource type="PackedScene" uid="uid://bak2oli4w0dnx" path="res://commons/ui/bow_ui.tscn" id="5_cmo1i"]
+[ext_resource type="PackedScene" uid="uid://bak2oli4w0dnx" path="res://commons/ui/bow_ui/bow_ui.tscn" id="5_cmo1i"]
+[ext_resource type="PackedScene" uid="uid://cqclp63tjk7j0" path="res://commons/ui/restart_ui/restart_ui.tscn" id="6_i1eo7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hyim0"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -20,6 +22,7 @@ tonemap_mode = 2
 glow_enabled = true
 
 [node name="Main" type="Node3D"]
+script = ExtResource("1_gu74f")
 
 [node name="MainCamera" type="Camera3D" parent="."]
 physics_interpolation_mode = 1
@@ -82,7 +85,7 @@ grow_vertical = 2
 mouse_filter = 2
 metadata/_edit_lock_ = true
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UI"]
+[node name="Crosshair" type="TextureRect" parent="CanvasLayer/UI"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -99,3 +102,9 @@ texture = ExtResource("4_spvjk")
 
 [node name="BowUi" parent="CanvasLayer/UI" instance=ExtResource("5_cmo1i")]
 layout_mode = 1
+
+[node name="RestartUI" parent="CanvasLayer/UI" instance=ExtResource("6_i1eo7")]
+visible = false
+layout_mode = 1
+
+[connection signal="restart_button_pressed" from="CanvasLayer/UI/RestartUI" to="." method="_on_restart_ui_restart_button_pressed"]
