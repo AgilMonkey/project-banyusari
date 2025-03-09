@@ -13,10 +13,10 @@ func _input(event: InputEvent) -> void:
 		if event.keycode == KEY_K and event.is_released():
 			player.health.damage(5)
 			$CanvasLayer/UI/HealthbarUI.set_healthbar_value(player.health.cur_health)
-			print(player.health.cur_health)
 
 
 func game_over():
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	$CanvasLayer/UI/RestartUI.show()
 
 
