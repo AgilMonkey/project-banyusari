@@ -18,6 +18,9 @@ func _input(event: InputEvent) -> void:
 	if Input.is_key_pressed(KEY_L):
 		for enemy in get_tree().get_nodes_in_group("enemy"):
 			enemy.process_mode = Node.PROCESS_MODE_INHERIT
+	
+	if Input.is_key_pressed(KEY_P):
+		get_tree().reload_current_scene()
 
 
 func game_over():

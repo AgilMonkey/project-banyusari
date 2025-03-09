@@ -134,7 +134,7 @@ grow_vertical = 0
 visible = false
 layout_mode = 1
 
-[node name="Label" type="Label" parent="CanvasLayer/UI"]
+[node name="GuideLabel" type="Label" parent="CanvasLayer/UI"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -144,7 +144,8 @@ offset_top = 20.0
 offset_right = 204.5
 offset_bottom = 54.0
 grow_horizontal = 2
-text = "Pencet L untuk menyalakan musuh"
+text = "Pencet L untuk menyalakan musuh
+P untuk reset"
 label_settings = SubResource("LabelSettings_vrojb")
 
 [node name="Musuh" parent="." instance=ExtResource("9_vrojb")]
