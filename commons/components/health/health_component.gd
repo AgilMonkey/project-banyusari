@@ -18,5 +18,6 @@ func add(val):
 
 func damage(val):
 	cur_health -= val
+	cur_health = max(cur_health, 0)
 	if cur_health <= 0:
 		health_reached_zero.emit()

@@ -3,6 +3,8 @@ extends RigidBody3D
 
 var on_floor = false
 
+@onready var health := $HealthComponent
+
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	on_floor = false
