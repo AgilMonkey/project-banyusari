@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://oab2qeo6wun8"]
 
 [ext_resource type="Script" uid="uid://dtgpw3jw3mf1s" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_4f7fj"]
-[ext_resource type="PackedScene" uid="uid://dgj5e4tlh6l65" path="res://player/player.tscn" id="2_hyim0"]
+[ext_resource type="PackedScene" uid="uid://dgj5e4tlh6l65" path="res://entities/player/player.tscn" id="2_hyim0"]
 [ext_resource type="Material" uid="uid://dhck6fgl1nw1o" path="res://world/ground.tres" id="3_spvjk"]
 [ext_resource type="Texture2D" uid="uid://bapad1648y2bc" path="res://assets/kenney_crosshair_pack/PNG/Outline/crosshair013.png" id="4_spvjk"]
-[ext_resource type="PackedScene" uid="uid://bak2oli4w0dnx" path="res://ui/bow_ui.tscn" id="5_cmo1i"]
+[ext_resource type="PackedScene" uid="uid://bak2oli4w0dnx" path="res://commons/ui/bow_ui.tscn" id="5_cmo1i"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hyim0"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -23,7 +23,7 @@ glow_enabled = true
 
 [node name="MainCamera" type="Camera3D" parent="."]
 physics_interpolation_mode = 1
-transform = Transform3D(0.99955, 0, 0.0299865, 0, 1, 0, -0.0299865, 0, 0.99955, 1.5, 2.3, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3, 0)
 near = 0.001
 
 [node name="PhantomCameraHost" type="Node" parent="MainCamera"]

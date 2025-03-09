@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://duemupw1p28ta"]
 
-[ext_resource type="Script" uid="uid://bphyn64ophapi" path="res://arrow/arrow.gd" id="1_jp72l"]
+[ext_resource type="Script" uid="uid://bphyn64ophapi" path="res://entities/arrow/arrow.gd" id="1_jp72l"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jp72l"]
 

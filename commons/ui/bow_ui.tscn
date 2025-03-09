@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bak2oli4w0dnx"]
 
-[ext_resource type="Script" uid="uid://djpmw3b3dec5q" path="res://ui/bow_ui.gd" id="1_0hbjx"]
+[ext_resource type="Script" uid="uid://djpmw3b3dec5q" path="res://commons/ui/bow_ui.gd" id="1_0hbjx"]
 [ext_resource type="Texture2D" uid="uid://becf7lfcwxybf" path="res://icon.svg" id="1_50jkm"]
 
 [node name="BowUi" type="Control"]
