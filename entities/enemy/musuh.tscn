@@ -20,7 +20,7 @@ uv1_triplanar = true
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kngvk"]
 
-[node name="Musuh" type="CharacterBody3D"]
+[node name="Musuh" type="CharacterBody3D" groups=["enemy"]]
 collision_layer = 16
 collision_mask = 17
 script = ExtResource("1_31ws8")

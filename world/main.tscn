@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://oab2qeo6wun8"]
+[gd_scene load_steps=16 format=3 uid="uid://oab2qeo6wun8"]
 
 [ext_resource type="Script" uid="uid://dtgpw3jw3mf1s" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_4f7fj"]
 [ext_resource type="Script" uid="uid://4o8nlvikwlhg" path="res://world/main.gd" id="1_gu74f"]
@@ -29,6 +29,9 @@ background_mode = 2
 sky = SubResource("Sky_4f7fj")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_vrojb"]
+font_size = 24
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_gu74f")
@@ -130,6 +133,19 @@ grow_vertical = 0
 [node name="RestartUI" parent="CanvasLayer/UI" instance=ExtResource("6_i1eo7")]
 visible = false
 layout_mode = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -204.5
+offset_top = 20.0
+offset_right = 204.5
+offset_bottom = 54.0
+grow_horizontal = 2
+text = "Pencet L untuk menyalakan musuh"
+label_settings = SubResource("LabelSettings_vrojb")
 
 [node name="Musuh" parent="." instance=ExtResource("9_vrojb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.3328, 1.5, -5.04632)

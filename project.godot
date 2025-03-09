@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Projek Banyusari"
-config/version="0.3"
+config/version="0.4"
 run/main_scene="uid://oab2qeo6wun8"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
@@ -35,6 +35,7 @@ enabled=PackedStringArray("res://addons/phantom_camera/plugin.cfg", "res://addon
 [global_group]
 
 player=""
+enemy=""
 
 [input]
 
