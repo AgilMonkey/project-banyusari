@@ -56,7 +56,7 @@ func add_arrow_to_scene():
 func cast_ray_center_screen():
 	var space_state = get_world_3d().direct_space_state
 
-	var center_screen = get_window().size / 2
+	var center_screen = Vector2(1280, 720) / 2
 	var origin = camera.project_ray_origin(center_screen)
 	var end = origin + camera.project_ray_normal(center_screen) * 100.0
 	var query = PhysicsRayQueryParameters3D.create(origin, end)
