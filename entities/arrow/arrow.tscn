@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://duemupw1p28ta"]
+[gd_scene load_steps=8 format=3 uid="uid://duemupw1p28ta"]
 
 [ext_resource type="Script" uid="uid://bphyn64ophapi" path="res://entities/arrow/arrow.gd" id="1_jp72l"]
+[ext_resource type="PackedScene" uid="uid://ctqbx520r1gsq" path="res://commons/components/hurtbox/hurtbox_component.tscn" id="2_sxu4w"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jp72l"]
 
@@ -16,8 +17,12 @@ height = 1.0
 radius = 0.2
 height = 1.2
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_sxu4w"]
+radius = 0.22
+
 [node name="Arrow" type="RigidBody3D"]
 collision_layer = 0
+collision_mask = 17
 mass = 0.1
 physics_material_override = SubResource("PhysicsMaterial_jp72l")
 continuous_cd = true
@@ -26,7 +31,7 @@ max_contacts_reported = 1
 script = ExtResource("1_jp72l")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.146753)
 material_override = SubResource("StandardMaterial3D_l4sal")
 mesh = SubResource("CylinderMesh_l4sal")
 
@@ -34,5 +39,18 @@ mesh = SubResource("CylinderMesh_l4sal")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_l4sal")
 
+[node name="ArrowHurtbox" parent="." instance=ExtResource("2_sxu4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.535824)
+collision_layer = 5
+collision_mask = 17
+monitoring = true
+damage = 50
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArrowHurtbox"]
+shape = SubResource("SphereShape3D_sxu4w")
+debug_color = Color(0.89609, 0.236496, 0.539882, 0.42)
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]
+[connection signal="body_entered" from="ArrowHurtbox" to="." method="_on_arrow_hurtbox_body_entered"]

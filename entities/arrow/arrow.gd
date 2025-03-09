@@ -14,3 +14,7 @@ func _physics_process(delta: float) -> void:
 func _on_body_entered(body: Node) -> void:
 	freeze = true
 	call_deferred("reparent", body)
+
+
+func _on_arrow_hurtbox_body_entered(body: Node3D) -> void:
+	$ArrowHurtbox.call_deferred("set_process_mode", ProcessMode.PROCESS_MODE_DISABLED)

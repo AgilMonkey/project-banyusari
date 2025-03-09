@@ -1,0 +1,60 @@
+[gd_scene load_steps=11 format=3 uid="uid://f61iyllvlbvs"]
+
+[ext_resource type="Script" uid="uid://ie1qmsxg50dl" path="res://entities/enemy/musuh.gd" id="1_31ws8"]
+[ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_oerhp"]
+[ext_resource type="PackedScene" uid="uid://dso1a8gi82pe5" path="res://commons/components/hitbox/hitbox_component.tscn" id="3_kngvk"]
+[ext_resource type="Script" uid="uid://cnwekxsl403tl" path="res://commons/components/health/health_component.gd" id="4_5be2r"]
+[ext_resource type="PackedScene" uid="uid://ctqbx520r1gsq" path="res://commons/components/hurtbox/hurtbox_component.tscn" id="4_31ws8"]
+[ext_resource type="Script" uid="uid://bs1lvhcyu2ul" path="res://commons/components/movement/follow_player.gd" id="6_cv1aj"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ehsmr"]
+radius = 0.51
+height = 2.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_31ws8"]
+albedo_color = Color(1, 0.38, 0.390333, 1)
+albedo_texture = ExtResource("1_oerhp")
+uv1_triplanar = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ehsmr"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kngvk"]
+
+[node name="Musuh" type="CharacterBody3D"]
+collision_layer = 16
+collision_mask = 17
+script = ExtResource("1_31ws8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ehsmr")
+debug_color = Color(0.875324, 0.308566, 0.404976, 0.42)
+
+[node name="Gfx" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_31ws8")
+mesh = SubResource("CapsuleMesh_ehsmr")
+
+[node name="EnemyHurtbox" parent="." instance=ExtResource("4_31ws8")]
+collision_layer = 8
+monitoring = true
+damage = 10
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyHurtbox"]
+shape = SubResource("CapsuleShape3D_ehsmr")
+debug_color = Color(0.875324, 0.308566, 0.404976, 0.42)
+
+[node name="EnemyHitbox" parent="." instance=ExtResource("3_kngvk")]
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyHitbox"]
+shape = SubResource("CapsuleShape3D_kngvk")
+debug_color = Color(0.24029, 0.571065, 0.363851, 0.42)
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("4_5be2r")
+
+[node name="FollowPlayer" type="Node" parent="."]
+script = ExtResource("6_cv1aj")
+
+[connection signal="health_reached_zero" from="HealthComponent" to="." method="_on_health_component_health_reached_zero"]

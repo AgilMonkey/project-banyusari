@@ -32,6 +32,10 @@ window/vsync/vsync_mode=0
 
 enabled=PackedStringArray("res://addons/phantom_camera/plugin.cfg", "res://addons/script-ide/plugin.cfg")
 
+[global_group]
+
+player=""
+
 [input]
 
 move_forward={
@@ -95,9 +99,13 @@ shoot={
 
 3d_physics/layer_1="default"
 3d_physics/layer_2="player"
+3d_physics/layer_3="player_hurtbox"
+3d_physics/layer_4="enemy_hurtbox"
+3d_physics/layer_5="enemy"
 
 [physics]
 
 3d/physics_engine="Jolt Physics"
+jolt_physics_3d/simulation/areas_detect_static_bodies=true
 3d/default_gravity=25.0
 common/physics_interpolation=true
