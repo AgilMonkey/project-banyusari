@@ -1,6 +1,7 @@
 class_name FollowPlayer
 extends Node
 
+@export var speed := 12.0
 @export var follow: Node3D
 
 @onready var character: CharacterBody3D = get_parent()
@@ -19,5 +20,5 @@ func _physics_process(delta: float) -> void:
 	var local_destination = destination - character.global_position
 	var direction = local_destination.normalized()
 	
-	character.velocity = direction * 8.0
+	character.velocity = direction * speed
 	character.move_and_slide()
