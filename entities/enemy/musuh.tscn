@@ -56,5 +56,6 @@ script = ExtResource("4_5be2r")
 
 [node name="FollowPlayer" type="Node" parent="."]
 script = ExtResource("6_cv1aj")
+speed = 13.0
 
 [connection signal="health_reached_zero" from="HealthComponent" to="." method="_on_health_component_health_reached_zero"]

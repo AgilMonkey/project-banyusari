@@ -1,7 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://dgj5e4tlh6l65"]
+[gd_scene load_steps=20 format=3 uid="uid://dgj5e4tlh6l65"]
 
 [ext_resource type="Script" uid="uid://bmhwonbtsjfg" path="res://entities/player/player.gd" id="1_qjkh3"]
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
+[ext_resource type="Script" uid="uid://dev8u4fgli83y" path="res://entities/player/components/shoulder_cam/shoulder_cam2.gd" id="2_7thud"]
 [ext_resource type="Script" uid="uid://ubkolvwgwumg" path="res://entities/player/components/shoot_projectile_to_camera.gd" id="2_rgyib"]
 [ext_resource type="Script" uid="uid://8t1puph1nn0n" path="res://entities/player/components/third_person_movement_rigidbody.gd" id="2_rkbax"]
 [ext_resource type="Script" uid="uid://bur14kb6xyx8y" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_g6k8r"]
@@ -51,29 +52,32 @@ script = ExtResource("1_qjkh3")
 
 [node name="CamPivot" type="Node3D" parent="."]
 
-[node name="Bow" type="Node3D" parent="CamPivot" node_paths=PackedStringArray("ball")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.792605, 0, 0)
-script = ExtResource("2_rgyib")
-ball = NodePath("../../Circle")
-
-[node name="SpringArm3D" type="SpringArm3D" parent="CamPivot"]
+[node name="ShoulderSpringArm" type="SpringArm3D" parent="CamPivot"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.8, 0)
 spring_length = 1.5
+margin = 0.5
+script = ExtResource("2_7thud")
+cam_pivot = Vector2(1.5, 0.8)
 
-[node name="SpringArm3D" type="SpringArm3D" parent="CamPivot/SpringArm3D"]
+[node name="ZSpringArm" type="SpringArm3D" parent="CamPivot/ShoulderSpringArm"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-spring_length = 8.0
+spring_length = 7.81729
+margin = 0.5
 
-[node name="PhantomCamera3D" type="Node3D" parent="CamPivot/SpringArm3D/SpringArm3D"]
-transform = Transform3D(1.00006, 0, 0, 0, 1, 0, 0, 0, 1.00006, 0, 0, 0)
+[node name="PhantomCamera3D" type="Node3D" parent="CamPivot/ShoulderSpringArm/ZSpringArm"]
+transform = Transform3D(0.999978, 0, 0, 0, 0.999829, 0, 0, 0, 0.999962, 1.5, 0, 7.81729)
 script = ExtResource("3_yw30f")
 tween_resource = SubResource("Resource_boad6")
 tween_on_load = false
-follow_offset = Vector3(2, 0.8, 0)
 follow_damping_value = Vector3(0.05, 0.05, 0.05)
 follow_distance = 8.0
 spring_length = 8.0
 metadata/_custom_type_script = "uid://pq1j7fjytppm"
+
+[node name="Bow" type="Node3D" parent="CamPivot" node_paths=PackedStringArray("ball")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
+script = ExtResource("2_rgyib")
+ball = NodePath("../../Circle")
 
 [node name="3DCameraController" type="Node" parent="CamPivot"]
 script = ExtResource("4_g6k8r")
@@ -88,7 +92,6 @@ mesh = SubResource("CapsuleMesh_ehsmr")
 
 [node name="ForwardHead" type="MeshInstance3D" parent="Gfx"]
 transform = Transform3D(-4.37114e-08, -1.73433, 0, 1, -7.58099e-08, 0, 0, 0, 1, -1.04476e-08, 0.488153, -0.46743)
-visible = false
 material_override = SubResource("StandardMaterial3D_rgyib")
 mesh = SubResource("CapsuleMesh_g6k8r")
 
