@@ -92,6 +92,7 @@ mesh = SubResource("CapsuleMesh_ehsmr")
 
 [node name="ForwardHead" type="MeshInstance3D" parent="Gfx"]
 transform = Transform3D(-4.37114e-08, -1.73433, 0, 1, -7.58099e-08, 0, 0, 0, 1, -1.04476e-08, 0.488153, -0.46743)
+visible = false
 material_override = SubResource("StandardMaterial3D_rgyib")
 mesh = SubResource("CapsuleMesh_g6k8r")
 
