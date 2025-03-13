@@ -33,9 +33,14 @@ func change_spring_arm_length(offset):
 
 
 func offset_child(offset):
+	z_spring_arm.position.x = 0
+	z_spring_arm.position.y = 0
+	z_spring_arm.position.z = cam_pivot.x
+	
 	for child in z_spring_arm.get_children():
-		child.position.x = offset.x
-		child.position.z = offset.z
+		child.position.x = 0
+		child.position.y = 0
+		child.position.z = cam_length
 
 
 func find_z_from_x_y(x, y, l):

@@ -20,8 +20,12 @@ func _input(event: InputEvent) -> void:
 		inp_hold_bow = true
 	elif Input.is_action_just_released("shoot"):
 		var bow_hold_percent = clampf(bow_hold_t / 1.0, 0.0, 1.0)
-		if bow_hold_percent > 0.5:
-			shoot_arrow()
+		if bow_hold_percent > 0.60 and bow_hold_percent < 0.80:
+			shoot_arrow(100)
+		elif bow_hold_t >= 0.85:
+			shoot_arrow(50)
+		elif bow_hold_percent > 0.5:
+			shoot_arrow(25)
 		
 		bow_hold_t = 0.0
 		inp_hold_bow = false
@@ -36,8 +40,9 @@ func _process(delta: float) -> void:
 	Global.player_bow_hold_percent_changed.emit(bow_hold_percent)
 
 
-func shoot_arrow():
+func shoot_arrow(dmg):
 	var new_arrow: RigidBody3D = add_arrow_to_scene()
+	new_arrow.damage = dmg
 	var cam_target = cast_ray_center_screen()
 	var bow_to_cam_target = cam_target - global_position
 	var vel_speed = 30.0 * clamp(bow_hold_t / 1.0, 0.0, 1.0) 
