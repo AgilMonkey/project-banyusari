@@ -1,40 +1,54 @@
-[gd_scene load_steps=3 format=3 uid="uid://bak2oli4w0dnx"]
+[gd_scene load_steps=4 format=3 uid="uid://bak2oli4w0dnx"]
 
 [ext_resource type="Script" uid="uid://djpmw3b3dec5q" path="res://commons/ui/bow_ui/bow_ui.gd" id="1_0hbjx"]
-[ext_resource type="Texture2D" uid="uid://becf7lfcwxybf" path="res://icon.svg" id="1_50jkm"]
+[ext_resource type="Texture2D" uid="uid://bmibw5i7esv3o" path="res://assets/Basic 2D Shapes Primitive 128px/grey soft/ShapeA (2).png" id="2_1elty"]
+[ext_resource type="Texture2D" uid="uid://dtkr15wesfbfn" path="res://assets/Basic 2D Shapes Primitive 128px/grey soft/Gear (7).png" id="2_2v56y"]
 
 [node name="BowUi" type="Control"]
 layout_mode = 3
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 0
-grow_vertical = 0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_0hbjx")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="Clip" type="TextureRect" parent="."]
+clip_children = 1
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -220.0
-offset_top = -220.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_2v56y")
 
-[node name="BowHoldProgress" type="TextureProgressBar" parent="MarginContainer"]
+[node name="BowHoldProgress" type="TextureProgressBar" parent="Clip"]
 unique_name_in_owner = true
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
 max_value = 1.0
 step = 0.005
 fill_mode = 4
 nine_patch_stretch = true
-texture_under = ExtResource("1_50jkm")
-texture_progress = ExtResource("1_50jkm")
-tint_under = Color(0.577008, 0.577008, 0.577008, 1)
+texture_under = ExtResource("2_1elty")
+texture_progress = ExtResource("2_1elty")
+tint_under = Color(0.58, 0.58, 0.58, 0.247059)

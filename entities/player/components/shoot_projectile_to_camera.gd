@@ -20,7 +20,7 @@ func _input(event: InputEvent) -> void:
 		inp_hold_bow = true
 	elif Input.is_action_just_released("shoot"):
 		var bow_hold_percent = clampf(bow_hold_t / 1.0, 0.0, 1.0)
-		if bow_hold_percent > 0.60 and bow_hold_percent < 0.80:
+		if bow_hold_percent > 0.70 and bow_hold_percent < 0.80:
 			shoot_arrow(100)
 		elif bow_hold_t >= 0.85:
 			shoot_arrow(50)
