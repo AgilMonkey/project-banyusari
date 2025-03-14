@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dgj5e4tlh6l65"]
+[gd_scene load_steps=18 format=3 uid="uid://dgj5e4tlh6l65"]
 
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
 [ext_resource type="Script" uid="uid://ccxmtexq3jnpw" path="res://entities/player/player2.gd" id="1_wvtmh"]
@@ -33,6 +33,8 @@ uv1_triplanar = true
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_g6k8r"]
 radius = 0.1805
 height = 0.416
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wvtmh"]
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_layer = 2
@@ -88,7 +90,7 @@ mesh = SubResource("CapsuleMesh_g6k8r")
 collision_mask = 8
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerHitbox"]
-shape = SubResource("CapsuleShape3D_ehsmr")
+shape = SubResource("CapsuleShape3D_wvtmh")
 debug_color = Color(0.28866, 0.482431, 0.813503, 0.42)
 
 [node name="HealthComponent" type="Node" parent="."]

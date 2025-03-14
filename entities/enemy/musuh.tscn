@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://f61iyllvlbvs"]
+[gd_scene load_steps=12 format=3 uid="uid://f61iyllvlbvs"]
 
 [ext_resource type="Script" uid="uid://ie1qmsxg50dl" path="res://entities/enemy/musuh.gd" id="1_31ws8"]
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_oerhp"]
@@ -8,8 +8,6 @@
 [ext_resource type="Script" uid="uid://bs1lvhcyu2ul" path="res://commons/components/movement/follow_player.gd" id="6_cv1aj"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ehsmr"]
-radius = 0.51
-height = 2.1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_31ws8"]
 albedo_color = Color(1, 0.38, 0.390333, 1)
@@ -17,6 +15,9 @@ albedo_texture = ExtResource("1_oerhp")
 uv1_triplanar = true
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ehsmr"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cv1aj"]
+radius = 0.52
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kngvk"]
 
@@ -27,7 +28,7 @@ script = ExtResource("1_31ws8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_ehsmr")
-debug_color = Color(0.875324, 0.308566, 0.404976, 0.42)
+debug_color = Color(0.178538, 0.591769, 0.693493, 0.42)
 
 [node name="Gfx" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_31ws8")
@@ -39,7 +40,7 @@ monitoring = true
 damage = 10
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyHurtbox"]
-shape = SubResource("CapsuleShape3D_ehsmr")
+shape = SubResource("CapsuleShape3D_cv1aj")
 debug_color = Color(0.875324, 0.308566, 0.404976, 0.42)
 
 [node name="EnemyHitbox" parent="." instance=ExtResource("3_kngvk")]
