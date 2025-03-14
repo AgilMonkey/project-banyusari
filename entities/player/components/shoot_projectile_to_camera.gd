@@ -11,10 +11,6 @@ var bow_hold_t := 0.0
 @onready var main_scene = Utility.find_type(get_tree().get_root(), Node3D)
 
 
-func _ready() -> void:
-	ball.call_deferred("reparent", main_scene)
-
-
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("shoot"):
 		inp_hold_bow = true
