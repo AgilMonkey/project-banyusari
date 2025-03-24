@@ -47,16 +47,17 @@ func horizontal_movement(delta):
 	var target_vel = cam_direction * max_speed
 	var next_vel = cam_direction * acceleration * delta
 	
-	c_body.velocity.x += next_vel.x
-	c_body.velocity.z += next_vel.z
+	c_body.velocity.x = target_vel.x
+	c_body.velocity.z = target_vel.z
 	
-	speed_limiter(delta)
-	turning(cam_direction, delta)
-	
-	if input_dir.length_squared() == 0:
-		hor_move_stop(delta)
+	#speed_limiter(delta)
+	#turning(cam_direction, delta)
+	#
+	#if input_dir.length_squared() == 0:
+		#hor_move_stop(delta)
 
 
+## @deprecated
 func speed_limiter(delta):
 	var cur_vel = c_body.velocity
 	var hor_vel = Vector3(cur_vel.x, 0, cur_vel.z)
@@ -67,6 +68,7 @@ func speed_limiter(delta):
 		c_body.velocity.z += stopper_vel.z
 
 
+## @deprecated
 func turning(cam_direction, delta):
 	var turn_accel = acceleration * 3.5
 	var vel = c_body.velocity
@@ -85,6 +87,7 @@ func turning(cam_direction, delta):
 		add_force(counter_push_force)
 
 
+## @deprecated
 func hor_move_stop(delta):
 	var cur_vel = c_body.velocity
 	var hor_vel = Vector3(cur_vel.x, 0, cur_vel.z)
