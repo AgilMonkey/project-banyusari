@@ -6,12 +6,15 @@ extends Node
 @export var stop_accel := 15.0
 @export var jump_force := 15.0
 @export var max_jump := 2
+@export var dash_force := 30.0
+@export var dash_time := 0.2
 
 var phys_delta := 0.0
 var input_dir := Vector3.ZERO
 var jump_inp_just_pressed := false
 
 var jump_count := 0
+var is_dashing := false
 
 @onready var c_body: CharacterBody3D = $".."
 @onready var cur_camera: Camera3D = get_viewport().get_camera_3d()
@@ -22,23 +25,28 @@ func _input(event: InputEvent) -> void:
 	var inp_flat = Input.get_vector("move_left", "move_right", "move_backward", "move_forward")
 	input_dir = Vector3(inp_flat.x, 0, -inp_flat.y)
 	
-	if Input.is_action_just_pressed("jump"):
-		jump_inp_just_pressed = true
 
 
 func _physics_process(delta: float) -> void:
 	phys_delta = delta
 	
-	gravity(delta)
+	if not is_dashing:
+		gravity(delta)
+		horizontal_movement(delta)
+	
 	landing()
-	horizontal_movement(delta)
-	jumping()
+	
+	if Input.is_action_just_pressed("jump"):
+		jump()
+	
+	if Input.is_action_just_pressed("dash") and not is_dashing:
+		dash()
 	
 	c_body.move_and_slide()
 	
-	var cur_vel = c_body.velocity
-	var hor_vel = Vector3(cur_vel.x, 0, cur_vel.z)
-	print("Hor: ", hor_vel.length())
+	#var cur_vel = c_body.velocity
+	#var hor_vel = Vector3(cur_vel.x, 0, cur_vel.z)
+	#print("Hor: ", hor_vel, " ", hor_vel.length())
 
 
 func horizontal_movement(delta):
@@ -97,14 +105,30 @@ func hor_move_stop(delta):
 	c_body.velocity.z = stop_vel.z
 
 
-func jumping():
+func jump():
 	var can_jump = c_body.is_on_floor() or jump_count < max_jump
-	if jump_inp_just_pressed and can_jump:
+	if can_jump:
 		c_body.velocity.y = jump_force
 		jump_count += 1
 	
 	if jump_inp_just_pressed:
 		jump_inp_just_pressed = false
+
+
+func dash():
+	get_tree().create_timer(dash_time).timeout.connect(func (): is_dashing = false)
+	is_dashing = true
+	
+	var cam_rotation_y = cur_camera.rotation.y
+	var dash_direction := Vector3.ZERO
+	if input_dir.length_squared() > 0.1:
+		dash_direction = input_dir.rotated(Vector3.UP, cam_rotation_y)
+	else:
+		dash_direction = Vector3.FORWARD.rotated(Vector3.UP, cam_rotation_y)
+	
+	var dash_force = dash_direction * dash_force
+	c_body.velocity.x = dash_force.x
+	c_body.velocity.z = dash_force.z
 
 
 func gravity(delta):
