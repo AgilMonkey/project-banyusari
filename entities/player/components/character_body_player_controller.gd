@@ -6,8 +6,8 @@ extends Node
 @export var stop_accel := 15.0
 @export var jump_force := 15.0
 @export var max_jump := 2
-@export var dash_force := 30.0
-@export var dash_time := 0.2
+@export var dash_force := 40.0
+@export var dash_time := 0.15
 
 var phys_delta := 0.0
 var input_dir := Vector3.ZERO

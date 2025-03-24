@@ -49,16 +49,16 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.7
 spring_length = 1.6
 margin = 0.5
 script = ExtResource("2_7thud")
-cam_length = 4.0
+cam_length = 5.0
 cam_pivot = Vector2(1.6, 0.7)
 
 [node name="ZSpringArm" type="SpringArm3D" parent="CamPivot/ShoulderSpringArm"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 1.6)
-spring_length = 3.59861
+spring_length = 4.68508
 margin = 0.5
 
 [node name="PhantomCamera3D" type="Node3D" parent="CamPivot/ShoulderSpringArm/ZSpringArm"]
-transform = Transform3D(0.999978, 0, 0, 0, 0.999829, 0, 0, 0, 0.999962, 0, 0, 4)
+transform = Transform3D(0.999978, 0, 0, 0, 0.999829, 0, 0, 0, 0.999962, 0, 0, 5)
 script = ExtResource("3_yw30f")
 tween_resource = SubResource("Resource_boad6")
 tween_on_load = false
