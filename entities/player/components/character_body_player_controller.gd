@@ -144,8 +144,7 @@ func dash():
 		dash_direction = Vector3.FORWARD.rotated(Vector3.UP, cam_rotation_y)
 	
 	var dash_force = dash_direction * dash_force
-	c_body.velocity.x = dash_force.x
-	c_body.velocity.z = dash_force.z
+	c_body.velocity = dash_force
 
 
 func gen_dash_energy(delta):

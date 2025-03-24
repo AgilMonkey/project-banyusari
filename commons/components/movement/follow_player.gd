@@ -1,7 +1,7 @@
 class_name FollowPlayer
 extends Node
 
-@export var speed := 12.0
+@export var speed := 15.0
 @export var follow: Node3D
 
 @onready var character: CharacterBody3D = get_parent()
