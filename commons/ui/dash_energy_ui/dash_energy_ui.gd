@@ -1,7 +1,6 @@
 extends Control
 
 
-var dash_max_energy: float
 var current_dash_energy: float
 var dash_energy_req: float
 
@@ -9,8 +8,10 @@ var dash_energy_req: float
 @onready var energy_bar: ProgressBar = $EnergyBar
 
 
-func _ready() -> void:
-	energy_bar.max_value = dash_max_energy
+func set_energy_bar_ui(dash_energy, dash_max, dash_req):
+	current_dash_energy = dash_energy
+	energy_bar.max_value = dash_max
+	dash_energy_req = dash_req 
 
 
 func _process(delta: float) -> void:

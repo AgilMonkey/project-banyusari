@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://dgj5e4tlh6l65"]
 
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
-[ext_resource type="Script" uid="uid://ccxmtexq3jnpw" path="res://entities/player/player2.gd" id="1_wvtmh"]
+[ext_resource type="Script" uid="uid://ccxmtexq3jnpw" path="res://entities/player/player.gd" id="1_wvtmh"]
 [ext_resource type="Script" uid="uid://dev8u4fgli83y" path="res://entities/player/components/shoulder_cam/shoulder_cam2.gd" id="2_7thud"]
 [ext_resource type="Script" uid="uid://ubkolvwgwumg" path="res://entities/player/components/shoot_projectile_to_camera.gd" id="2_rgyib"]
 [ext_resource type="Script" uid="uid://bur14kb6xyx8y" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_g6k8r"]

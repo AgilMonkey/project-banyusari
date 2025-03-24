@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://oab2qeo6wun8"]
+[gd_scene load_steps=16 format=3 uid="uid://oab2qeo6wun8"]
 
 [ext_resource type="Script" uid="uid://dtgpw3jw3mf1s" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_4f7fj"]
 [ext_resource type="Script" uid="uid://4o8nlvikwlhg" path="res://world/main.gd" id="1_gu74f"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://d4ae3kbvepbif" path="res://assets/kenney_crosshair_pack/PNG/Outline/crosshair001.png" id="5_vrojb"]
 [ext_resource type="PackedScene" uid="uid://cqclp63tjk7j0" path="res://commons/ui/restart_ui/restart_ui.tscn" id="6_i1eo7"]
 [ext_resource type="PackedScene" uid="uid://da0phfmoy6owc" path="res://commons/ui/healthbar_ui/healthbar_ui.tscn" id="7_04q08"]
+[ext_resource type="PackedScene" uid="uid://dg8g84qwgl56i" path="res://commons/ui/dash_energy_ui/dash_energy_ui.tscn" id="9_qnd6n"]
 [ext_resource type="PackedScene" uid="uid://f61iyllvlbvs" path="res://entities/enemy/musuh.tscn" id="9_vrojb"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_vrojb"]
@@ -129,6 +130,17 @@ grow_vertical = 0
 [node name="RestartUI" parent="CanvasLayer/UI" instance=ExtResource("6_i1eo7")]
 visible = false
 layout_mode = 1
+
+[node name="DashEnergyUi" parent="CanvasLayer/UI" instance=ExtResource("9_qnd6n")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -91.0
+offset_right = 20.0
+offset_bottom = -91.0
+grow_vertical = 0
 
 [node name="GuideLabel" type="Label" parent="CanvasLayer/UI"]
 layout_mode = 1
