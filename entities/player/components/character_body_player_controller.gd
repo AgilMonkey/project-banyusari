@@ -31,6 +31,7 @@ func _physics_process(delta: float) -> void:
 	jumping()
 	
 	c_body.move_and_slide()
+	print(c_body.velocity.length())
 
 
 func horizontal_movement(delta):
@@ -42,13 +43,17 @@ func horizontal_movement(delta):
 	c_body.velocity.x += next_vel.x
 	c_body.velocity.z += next_vel.z
 	
+	stopper_max_speed(delta)
+
+
+func stopper_max_speed(delta):
 	var cur_vel = c_body.velocity
 	var hor_vel = Vector3(cur_vel.x, 0, cur_vel.z)
 	if hor_vel.length() > max_speed:
-		var clamp_vel = hor_vel.normalized() * max_speed 
+		var stopper_vel = -hor_vel.normalized() * acceleration * delta
 		
-		c_body.velocity.x = clamp_vel.x
-		c_body.velocity.z = clamp_vel.z
+		c_body.velocity.x += stopper_vel.x
+		c_body.velocity.z += stopper_vel.z
 
 
 func jumping():
