@@ -4,8 +4,8 @@
 [ext_resource type="Script" uid="uid://4o8nlvikwlhg" path="res://world/main.gd" id="1_gu74f"]
 [ext_resource type="PackedScene" uid="uid://dgj5e4tlh6l65" path="res://entities/player/player.tscn" id="2_hyim0"]
 [ext_resource type="Material" uid="uid://dhck6fgl1nw1o" path="res://world/ground.tres" id="3_spvjk"]
-[ext_resource type="Texture2D" uid="uid://bapad1648y2bc" path="res://assets/kenney_crosshair_pack/PNG/Outline/crosshair013.png" id="4_spvjk"]
 [ext_resource type="PackedScene" uid="uid://bak2oli4w0dnx" path="res://commons/ui/bow_ui/bow_ui.tscn" id="5_cmo1i"]
+[ext_resource type="Texture2D" uid="uid://d4ae3kbvepbif" path="res://assets/kenney_crosshair_pack/PNG/Outline/crosshair001.png" id="5_vrojb"]
 [ext_resource type="PackedScene" uid="uid://cqclp63tjk7j0" path="res://commons/ui/restart_ui/restart_ui.tscn" id="6_i1eo7"]
 [ext_resource type="PackedScene" uid="uid://da0phfmoy6owc" path="res://commons/ui/healthbar_ui/healthbar_ui.tscn" id="7_04q08"]
 [ext_resource type="PackedScene" uid="uid://f61iyllvlbvs" path="res://entities/enemy/musuh.tscn" id="9_vrojb"]
@@ -35,7 +35,7 @@ script = ExtResource("1_gu74f")
 
 [node name="MainCamera" type="Camera3D" parent="."]
 physics_interpolation_mode = 1
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 2.3, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 2.2, 4)
 near = 0.001
 
 [node name="PhantomCameraHost" type="Node" parent="MainCamera"]
@@ -110,7 +110,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_spvjk")
+texture = ExtResource("5_vrojb")
 
 [node name="BowUi" parent="CanvasLayer/UI" instance=ExtResource("5_cmo1i")]
 layout_mode = 1

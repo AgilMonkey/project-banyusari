@@ -2,11 +2,12 @@ extends Node
 
 
 @export var max_speed := 15.0
-@export var acceleration := 10.0
-@export var stop_accel := 8.0
+@export var acceleration := 14.0
+@export var stop_accel := 15.0
 @export var jump_force := 15.0
 @export var max_jump := 2
 
+var phys_delta := 0.0
 var input_dir := Vector3.ZERO
 var jump_inp_just_pressed := false
 
@@ -26,13 +27,18 @@ func _input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	phys_delta = delta
+	
 	gravity(delta)
 	landing()
 	horizontal_movement(delta)
 	jumping()
 	
 	c_body.move_and_slide()
-	print(c_body.velocity.length())
+	
+	var cur_vel = c_body.velocity
+	var hor_vel = Vector3(cur_vel.x, 0, cur_vel.z)
+	print("Hor: ", hor_vel.length())
 
 
 func horizontal_movement(delta):
@@ -45,6 +51,7 @@ func horizontal_movement(delta):
 	c_body.velocity.z += next_vel.z
 	
 	speed_limiter(delta)
+	turning(cam_direction, delta)
 	
 	if input_dir.length_squared() == 0:
 		hor_move_stop(delta)
@@ -58,6 +65,24 @@ func speed_limiter(delta):
 		
 		c_body.velocity.x += stopper_vel.x
 		c_body.velocity.z += stopper_vel.z
+
+
+func turning(cam_direction, delta):
+	var turn_accel = acceleration * 3.5
+	var vel = c_body.velocity
+	var vel_dir = vel.normalized()
+	var vel_neg_dir = -vel_dir
+	var vel_inp_dot = vel_dir.dot(cam_direction)
+	var is_turning = vel_inp_dot < 0.92
+	var turn_percent = clampf((-vel_inp_dot + 1) / 2, 0.0, 1.0)
+	if is_turning and cam_direction.length() > 0.0:
+		var neg_vel_force = vel_neg_dir * turn_percent * turn_accel
+		var neg_velxz_force = Vector3(neg_vel_force.x, 0, neg_vel_force.z)
+		add_force(neg_velxz_force)
+		
+		var turn_percent_reverse = clampf(1.0 - turn_percent, 0.0, 1.0)
+		var counter_push_force = cam_direction * turn_percent_reverse * (acceleration / 1.5)
+		add_force(counter_push_force)
 
 
 func hor_move_stop(delta):
@@ -87,3 +112,7 @@ func gravity(delta):
 func landing():
 	if c_body.is_on_floor() and jump_count > 0:
 		jump_count = 0
+
+
+func add_force(force: Vector3):
+	c_body.velocity += force * phys_delta
