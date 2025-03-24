@@ -26,6 +26,10 @@ var cur_dash_energy := 0.0
 @onready var cur_camera: Camera3D = get_viewport().get_camera_3d()
 
 
+func _ready() -> void:
+	cur_dash_energy = max_dash_energy
+
+
 func _input(event: InputEvent) -> void:
 	# Controller
 	var inp_flat = Input.get_vector("move_left", "move_right", "move_backward", "move_forward")
