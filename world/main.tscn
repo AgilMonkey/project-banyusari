@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://oab2qeo6wun8"]
+[gd_scene load_steps=15 format=3 uid="uid://oab2qeo6wun8"]
 
 [ext_resource type="Script" uid="uid://dtgpw3jw3mf1s" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_4f7fj"]
 [ext_resource type="Script" uid="uid://4o8nlvikwlhg" path="res://world/main.gd" id="1_gu74f"]
@@ -9,9 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://cqclp63tjk7j0" path="res://commons/ui/restart_ui/restart_ui.tscn" id="6_i1eo7"]
 [ext_resource type="PackedScene" uid="uid://da0phfmoy6owc" path="res://commons/ui/healthbar_ui/healthbar_ui.tscn" id="7_04q08"]
 [ext_resource type="PackedScene" uid="uid://f61iyllvlbvs" path="res://entities/enemy/musuh.tscn" id="9_vrojb"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yw30f"]
-friction = 0.0
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_vrojb"]
 vertices = PackedVector3Array(-20.75, 1, -29, -20, 1, -29, -20, 1, -249.5, -21.25, 1, -28.25, -249.5, 1, -19.25, -24, 1, -19.25, -249.5, 1, -249.5, -10.75, 1, -26.25, -10.25, 1, -24.75, 9.5, 1, -24, 10.5, 1, -27.25, 11.5, 1, -27.5, 11.5, 1, -249.5, 20.5, 1, -24.75, 21.25, 1, -24.25, 249.5, 1, -23.5, 249.5, 1, -249.5, 21.25, 1, -23.5, -14, 10.5, -16.5, -11.25, 10.5, -25, -20, 10.5, -28, -23, 10.5, -19.5, 11.5, 10.5, -26.25, 8.75, 10.5, -18.5, 8.75, 10.5, -17.5, 17.5, 10.5, -14.75, 20.25, 10.5, -23.25, 20, 10.5, -23.75, 7.5, 1, -17.75, -12.5, 1, -17.75, 18.5, 1, -14.5, 23.25, 1, 9.75, 33, 1, 12.75, 33.5, 1, 13.75, 249.5, 1, 13.75, -24, 1, 22.75, -22.75, 1, 22.5, -22, 1, -17.75, -23.75, 1, -18.25, -249.5, 1, 32.5, -27, 1, 32.5, -14.25, 1, 25.25, -14.25, 1, -15.25, 7.5, 1, -17, 8.25, 1, -16.5, -13.25, 1, -15.5, -13.5, 1, 25.5, 19.5, 1, 20, 22.5, 1, 10.5, 17.75, 1, -13.75, 32.25, 10.5, 14.5, 32.25, 10.5, 13.75, 31.75, 10.5, 13.5, 21.25, 10.5, 20, 29.5, 10.5, 22.5, 23.5, 10.5, 11, 20.75, 10.5, 19.25, 30.5, 1, 23.25, 29.5, 1, 23.75, 29.5, 1, 249.5, 249.5, 1, 249.5, -13, 1, 26, 20.25, 1, 20.75, -16, 1, 36, -17.25, 1, 249.5, -17.25, 1, 36.25, -23, 10.5, 23.75, -25.75, 10.5, 31.75, -25.75, 10.5, 32.5, -17, 10.5, 35.25, -14.25, 10.5, 27, -14.5, 10.5, 26.25, -26.25, 1, 33.5, -249.5, 1, 249.5)
@@ -49,7 +46,6 @@ metadata/_custom_type_script = "uid://dtgpw3jw3mf1s"
 
 [node name="Player" parent="." instance=ExtResource("2_hyim0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-physics_material_override = SubResource("PhysicsMaterial_yw30f")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_vrojb")
