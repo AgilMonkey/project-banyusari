@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dgj5e4tlh6l65"]
+[gd_scene load_steps=19 format=3 uid="uid://dgj5e4tlh6l65"]
 
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
 [ext_resource type="Script" uid="uid://ccxmtexq3jnpw" path="res://entities/player/player2.gd" id="1_wvtmh"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dgbqyo2d0uqc" path="res://assets/kenney_prototype_textures/PNG/Orange/texture_09.png" id="6_boad6"]
 [ext_resource type="Script" uid="uid://cnwekxsl403tl" path="res://commons/components/health/health_component.gd" id="9_bectd"]
 [ext_resource type="PackedScene" uid="uid://dso1a8gi82pe5" path="res://commons/components/hitbox/hitbox_component.tscn" id="10_wvtmh"]
+[ext_resource type="Script" uid="uid://cdl3la0h370ea" path="res://entities/player/components/character_body_player_controller.gd" id="11_7thud"]
 
 [sub_resource type="Resource" id="Resource_boad6"]
 script = ExtResource("3_g6k8r")
@@ -95,5 +96,8 @@ debug_color = Color(0.28866, 0.482431, 0.813503, 0.42)
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("9_bectd")
+
+[node name="CharacterBodyPlayerController" type="Node" parent="."]
+script = ExtResource("11_7thud")
 
 [connection signal="on_hit" from="PlayerHitbox" to="." method="_on_player_hitbox_on_hit"]
