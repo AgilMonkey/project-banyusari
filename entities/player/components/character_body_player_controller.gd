@@ -1,7 +1,8 @@
 extends Node
 
 
-@export var speed := 14.0
+@export var max_speed := 15.0
+@export var acceleration := 10.0
 @export var jump_force := 15.0
 @export var max_jump := 2
 
@@ -26,19 +27,28 @@ func _input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	gravity(delta)
 	landing()
-	horizontal_movement()
+	horizontal_movement(delta)
 	jumping()
 	
 	c_body.move_and_slide()
 
 
-func horizontal_movement():
+func horizontal_movement(delta):
 	var cam_rotation_y = cur_camera.rotation.y
 	var cam_direction = input_dir.rotated(Vector3.UP, cam_rotation_y)
-	var from_cam_vel = cam_direction * speed
+	var target_vel = cam_direction * max_speed
+	var next_vel = cam_direction * acceleration * delta
 	
-	c_body.velocity.x = from_cam_vel.x
-	c_body.velocity.z = from_cam_vel.z
+	c_body.velocity.x += next_vel.x
+	c_body.velocity.z += next_vel.z
+	
+	var cur_vel = c_body.velocity
+	var hor_vel = Vector3(cur_vel.x, 0, cur_vel.z)
+	if hor_vel.length() > max_speed:
+		var clamp_vel = hor_vel.normalized() * max_speed 
+		
+		c_body.velocity.x = clamp_vel.x
+		c_body.velocity.z = clamp_vel.z
 
 
 func jumping():
