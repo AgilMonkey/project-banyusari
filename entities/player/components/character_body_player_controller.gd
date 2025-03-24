@@ -3,6 +3,7 @@ extends Node
 
 @export var max_speed := 15.0
 @export var acceleration := 10.0
+@export var stop_accel := 8.0
 @export var jump_force := 15.0
 @export var max_jump := 2
 
@@ -43,10 +44,13 @@ func horizontal_movement(delta):
 	c_body.velocity.x += next_vel.x
 	c_body.velocity.z += next_vel.z
 	
-	stopper_max_speed(delta)
+	speed_limiter(delta)
+	
+	if input_dir.length_squared() == 0:
+		hor_move_stop(delta)
 
 
-func stopper_max_speed(delta):
+func speed_limiter(delta):
 	var cur_vel = c_body.velocity
 	var hor_vel = Vector3(cur_vel.x, 0, cur_vel.z)
 	if hor_vel.length() > max_speed:
@@ -54,6 +58,15 @@ func stopper_max_speed(delta):
 		
 		c_body.velocity.x += stopper_vel.x
 		c_body.velocity.z += stopper_vel.z
+
+
+func hor_move_stop(delta):
+	var cur_vel = c_body.velocity
+	var hor_vel = Vector3(cur_vel.x, 0, cur_vel.z)
+	var stop_vel = hor_vel.move_toward(Vector3.ZERO, stop_accel * delta)
+	
+	c_body.velocity.x = stop_vel.x
+	c_body.velocity.z = stop_vel.z
 
 
 func jumping():
