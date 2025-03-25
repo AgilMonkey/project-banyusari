@@ -11,9 +11,10 @@ signal on_dash_val_changed(cur_energy, max_dash, dash_req)
 @export var dash_force := 40.0
 @export var dash_time := 0.15
 @export var max_dash_energy := 3.0
-@export var dash_energy_gen := 1.5
+@export var dash_energy_gen := 1.0
+@export var dash_energy_gen_in_air := 0.6
 @export var dash_energy_req := 1.0
-@export var slide_max_speed := 20.0
+@export var slide_max_speed := 18.0
 
 var phys_delta := 0.0
 var input_dir := Vector3.ZERO
@@ -65,7 +66,7 @@ func _input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
-	if not is_dashing and not is_sliding and not is_in_air:
+	if not is_dashing:
 		gen_dash_energy(delta)
 	
 	# UI STUFF
@@ -140,7 +141,10 @@ func dash():
 
 
 func gen_dash_energy(delta):
-	cur_dash_energy += delta * dash_energy_gen
+	if not is_in_air or is_sliding:
+		cur_dash_energy += delta * dash_energy_gen
+	else:
+		cur_dash_energy += delta * dash_energy_gen_in_air
 	cur_dash_energy = clamp(cur_dash_energy, 0.0, max_dash_energy)
 
 
