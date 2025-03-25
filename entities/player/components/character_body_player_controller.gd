@@ -12,7 +12,7 @@ signal on_dash_val_changed(cur_energy, max_dash, dash_req)
 @export var dash_time := 0.15
 @export var max_dash_energy := 3.0
 @export var dash_energy_gen := 1.0
-@export var dash_energy_gen_in_air := 0.6
+@export var dash_energy_gen_in_air := 0.7
 @export var dash_energy_req := 1.0
 @export var slide_max_speed := 18.0
 
@@ -141,7 +141,7 @@ func dash():
 
 
 func gen_dash_energy(delta):
-	if not is_in_air or is_sliding:
+	if not is_in_air and not is_sliding:
 		cur_dash_energy += delta * dash_energy_gen
 	else:
 		cur_dash_energy += delta * dash_energy_gen_in_air
