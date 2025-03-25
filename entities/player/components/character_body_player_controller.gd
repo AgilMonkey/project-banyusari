@@ -13,7 +13,7 @@ signal on_dash_val_changed(cur_energy, max_dash, dash_req)
 @export var max_dash_energy := 3.0
 @export var dash_energy_gen := 1.5
 @export var dash_energy_req := 1.0
-@export var slide_max_speed := 18.0
+@export var slide_max_speed := 20.0
 
 var phys_delta := 0.0
 var input_dir := Vector3.ZERO
@@ -24,6 +24,8 @@ var cam_inp_dir := Vector3.ZERO:
 		return cam_direction
 
 var jump_count := 0
+
+var is_in_air := false
 
 var is_dashing := false
 var cur_dash_energy := 0.0
@@ -41,6 +43,7 @@ var slide_inp_pressed := false
 @onready var cur_camera: Camera3D = get_viewport().get_camera_3d()
 @onready var collision_shape: CollisionShape3D = $"../CollisionShape3D"
 @onready var gfx: MeshInstance3D = $"../Gfx"
+@onready var crouch_ray_cast: RayCast3D = $"../CrouchRayCast"
 
 
 func _ready() -> void:
@@ -71,6 +74,8 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	
+	is_in_air = not c_body.is_on_floor()
+	
 	if not is_dashing:
 		gravity(delta)
 	
@@ -85,7 +90,7 @@ func _physics_process(delta: float) -> void:
 	if dash_inp_just_pressed and not is_dashing and not is_sliding:
 		dash()
 	
-	if slide_inp_pressed:
+	if slide_inp_pressed and not is_in_air:
 		slide()
 	else:
 		is_sliding = false
@@ -168,7 +173,7 @@ func slide_change_p_size():
 		var col_shape: CapsuleShape3D = collision_shape.shape
 		collision_shape.position.y = -0.5
 		col_shape.height = 1.0
-	else:
+	elif not crouch_ray_cast.is_colliding():
 		gfx.position.y = 0.0
 		gfx.scale.y = 1.0
 		

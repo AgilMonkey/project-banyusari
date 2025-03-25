@@ -95,6 +95,10 @@ collision_mask = 8
 shape = SubResource("CapsuleShape3D_wvtmh")
 debug_color = Color(0.28866, 0.482431, 0.813503, 0.42)
 
+[node name="CrouchRayCast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+target_position = Vector3(0, 2, 0)
+
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("9_bectd")
 
