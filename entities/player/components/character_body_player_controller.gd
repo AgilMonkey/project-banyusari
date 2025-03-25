@@ -16,11 +16,15 @@ signal on_dash_val_changed(cur_energy, max_dash, dash_req)
 
 var phys_delta := 0.0
 var input_dir := Vector3.ZERO
-var jump_inp_just_pressed := false
 
 var jump_count := 0
 var is_dashing := false
 var cur_dash_energy := 0.0
+
+# INPUTS
+var jump_inp_just_pressed := false
+var dash_inp_just_pressed := false
+
 
 @onready var c_body: CharacterBody3D = $".."
 @onready var cur_camera: Camera3D = get_viewport().get_camera_3d()
@@ -35,6 +39,11 @@ func _input(event: InputEvent) -> void:
 	var inp_flat = Input.get_vector("move_left", "move_right", "move_backward", "move_forward")
 	input_dir = Vector3(inp_flat.x, 0, -inp_flat.y)
 	
+	if Input.is_action_just_pressed("jump"):
+		jump_inp_just_pressed = true
+	
+	if Input.is_action_just_pressed("dash"):
+		dash_inp_just_pressed = true
 
 
 func _process(delta: float) -> void:
@@ -53,13 +62,17 @@ func _physics_process(delta: float) -> void:
 	
 	landing()
 	
-	if Input.is_action_just_pressed("jump"):
+	if jump_inp_just_pressed:
 		jump()
 	
-	if Input.is_action_just_pressed("dash") and not is_dashing:
+	if dash_inp_just_pressed and not is_dashing:
 		dash()
 	
 	c_body.move_and_slide()
+	
+	# INPUT STUFF
+	jump_inp_just_pressed = false
+	dash_inp_just_pressed = false
 
 
 func horizontal_movement(delta):
@@ -77,9 +90,6 @@ func jump():
 	if can_jump:
 		c_body.velocity.y = jump_force
 		jump_count += 1
-	
-	if jump_inp_just_pressed:
-		jump_inp_just_pressed = false
 
 
 func dash():
