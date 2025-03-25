@@ -65,7 +65,7 @@ func _input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
-	if not is_dashing and not is_sliding:
+	if not is_dashing and not is_sliding and not is_in_air:
 		gen_dash_energy(delta)
 	
 	# UI STUFF
