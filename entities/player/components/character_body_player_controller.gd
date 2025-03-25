@@ -90,6 +90,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		is_sliding = false
 		slide_dir = Vector3.ZERO
+	slide_change_p_size()
 	
 	c_body.move_and_slide()
 	
@@ -146,8 +147,6 @@ func slide():
 	
 	c_body.velocity.x = target_vel.x
 	c_body.velocity.z = target_vel.z
-	
-	slide_gfx()
 
 
 func get_slide_dir():
@@ -161,8 +160,21 @@ func get_slide_dir():
 	return c_body.velocity.normalized()
 
 
-func slide_gfx():
-	pass
+func slide_change_p_size():
+	if is_sliding:
+		gfx.position.y = -0.5
+		gfx.scale.y = 0.5
+		
+		var col_shape: CapsuleShape3D = collision_shape.shape
+		collision_shape.position.y = -0.5
+		col_shape.height = 1.0
+	else:
+		gfx.position.y = 0.0
+		gfx.scale.y = 1.0
+		
+		var col_shape: CapsuleShape3D = collision_shape.shape
+		collision_shape.position.y = 0.0
+		col_shape.height = 2.0
 
 
 func gravity(delta):

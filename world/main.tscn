@@ -79,6 +79,11 @@ transform = Transform3D(-0.310643, 0, -0.950527, 0, 1, 0, 0.950527, 0, -0.310643
 use_collision = true
 size = Vector3(10, 10, 10)
 
+[node name="Ground7" type="CSGBox3D" parent="NavigationRegion3D/Level"]
+transform = Transform3D(-0.310643, 0, -0.950527, 0, 1, 0, 0.950527, 0, -0.310643, 26.5665, 2.65044, 6.49517)
+use_collision = true
+size = Vector3(9.64062, 0.825684, 10)
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_spvjk")
 
