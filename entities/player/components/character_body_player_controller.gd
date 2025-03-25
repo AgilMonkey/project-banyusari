@@ -17,6 +17,11 @@ signal on_dash_val_changed(cur_energy, max_dash, dash_req)
 
 var phys_delta := 0.0
 var input_dir := Vector3.ZERO
+var cam_inp_dir := Vector3.ZERO:
+	get:
+		var cam_rotation_y = cur_camera.rotation.y
+		var cam_direction = input_dir.rotated(Vector3.UP, cam_rotation_y)
+		return cam_direction
 
 var jump_count := 0
 
@@ -24,6 +29,7 @@ var is_dashing := false
 var cur_dash_energy := 0.0
 
 var is_sliding := false
+var slide_dir := Vector3.ZERO
 
 # INPUTS
 var jump_inp_just_pressed := false
@@ -33,6 +39,8 @@ var slide_inp_pressed := false
 
 @onready var c_body: CharacterBody3D = $".."
 @onready var cur_camera: Camera3D = get_viewport().get_camera_3d()
+@onready var collision_shape: CollisionShape3D = $"../CollisionShape3D"
+@onready var gfx: MeshInstance3D = $"../Gfx"
 
 
 func _ready() -> void:
@@ -50,8 +58,7 @@ func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("dash"):
 		dash_inp_just_pressed = true
 	
-	if Input.is_action_pressed("slide"):
-		slide_inp_pressed = true
+	slide_inp_pressed = Input.is_action_pressed("slide")
 
 
 func _process(delta: float) -> void:
@@ -66,6 +73,8 @@ func _physics_process(delta: float) -> void:
 	
 	if not is_dashing:
 		gravity(delta)
+	
+	if not is_dashing and not is_sliding:
 		horizontal_movement(delta)
 	
 	landing()
@@ -73,11 +82,14 @@ func _physics_process(delta: float) -> void:
 	if jump_inp_just_pressed:
 		jump()
 	
-	if dash_inp_just_pressed and not is_dashing:
+	if dash_inp_just_pressed and not is_dashing and not is_sliding:
 		dash()
 	
 	if slide_inp_pressed:
 		slide()
+	else:
+		is_sliding = false
+		slide_dir = Vector3.ZERO
 	
 	c_body.move_and_slide()
 	
@@ -87,8 +99,7 @@ func _physics_process(delta: float) -> void:
 
 
 func horizontal_movement(delta):
-	var cam_rotation_y = cur_camera.rotation.y
-	var cam_direction = input_dir.rotated(Vector3.UP, cam_rotation_y)
+	var cam_direction = cam_inp_dir
 	var target_vel = cam_direction * max_speed
 	var next_vel = cam_direction * acceleration * delta
 	
@@ -128,6 +139,29 @@ func gen_dash_energy(delta):
 
 
 func slide():
+	is_sliding = true
+	
+	slide_dir = get_slide_dir()
+	var target_vel = slide_dir * slide_max_speed
+	
+	c_body.velocity.x = target_vel.x
+	c_body.velocity.z = target_vel.z
+	
+	slide_gfx()
+
+
+func get_slide_dir():
+	if slide_dir.length_squared() > 0:
+		return slide_dir
+	
+	if cam_inp_dir.length_squared() == 0:
+		var cam_rotation_y = cur_camera.rotation.y
+		return Vector3.FORWARD.rotated(Vector3.UP, cam_rotation_y)
+	
+	return c_body.velocity.normalized()
+
+
+func slide_gfx():
 	pass
 
 
