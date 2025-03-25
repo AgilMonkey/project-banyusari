@@ -70,52 +70,6 @@ func horizontal_movement(delta):
 	
 	c_body.velocity.x = target_vel.x
 	c_body.velocity.z = target_vel.z
-	
-	#speed_limiter(delta)
-	#turning(cam_direction, delta)
-	#
-	#if input_dir.length_squared() == 0:
-		#hor_move_stop(delta)
-
-
-## @deprecated
-func speed_limiter(delta):
-	var cur_vel = c_body.velocity
-	var hor_vel = Vector3(cur_vel.x, 0, cur_vel.z)
-	if hor_vel.length() > max_speed:
-		var stopper_vel = -hor_vel.normalized() * acceleration * delta
-		
-		c_body.velocity.x += stopper_vel.x
-		c_body.velocity.z += stopper_vel.z
-
-
-## @deprecated
-func turning(cam_direction, delta):
-	var turn_accel = acceleration * 3.5
-	var vel = c_body.velocity
-	var vel_dir = vel.normalized()
-	var vel_neg_dir = -vel_dir
-	var vel_inp_dot = vel_dir.dot(cam_direction)
-	var is_turning = vel_inp_dot < 0.92
-	var turn_percent = clampf((-vel_inp_dot + 1) / 2, 0.0, 1.0)
-	if is_turning and cam_direction.length() > 0.0:
-		var neg_vel_force = vel_neg_dir * turn_percent * turn_accel
-		var neg_velxz_force = Vector3(neg_vel_force.x, 0, neg_vel_force.z)
-		add_force(neg_velxz_force)
-		
-		var turn_percent_reverse = clampf(1.0 - turn_percent, 0.0, 1.0)
-		var counter_push_force = cam_direction * turn_percent_reverse * (acceleration / 1.5)
-		add_force(counter_push_force)
-
-
-## @deprecated
-func hor_move_stop(delta):
-	var cur_vel = c_body.velocity
-	var hor_vel = Vector3(cur_vel.x, 0, cur_vel.z)
-	var stop_vel = hor_vel.move_toward(Vector3.ZERO, stop_accel * delta)
-	
-	c_body.velocity.x = stop_vel.x
-	c_body.velocity.z = stop_vel.z
 
 
 func jump():
