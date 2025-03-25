@@ -13,17 +13,22 @@ signal on_dash_val_changed(cur_energy, max_dash, dash_req)
 @export var max_dash_energy := 3.0
 @export var dash_energy_gen := 1.5
 @export var dash_energy_req := 1.0
+@export var slide_max_speed := 18.0
 
 var phys_delta := 0.0
 var input_dir := Vector3.ZERO
 
 var jump_count := 0
+
 var is_dashing := false
 var cur_dash_energy := 0.0
+
+var is_sliding := false
 
 # INPUTS
 var jump_inp_just_pressed := false
 var dash_inp_just_pressed := false
+var slide_inp_pressed := false
 
 
 @onready var c_body: CharacterBody3D = $".."
@@ -44,6 +49,9 @@ func _input(event: InputEvent) -> void:
 	
 	if Input.is_action_just_pressed("dash"):
 		dash_inp_just_pressed = true
+	
+	if Input.is_action_pressed("slide"):
+		slide_inp_pressed = true
 
 
 func _process(delta: float) -> void:
@@ -67,6 +75,9 @@ func _physics_process(delta: float) -> void:
 	
 	if dash_inp_just_pressed and not is_dashing:
 		dash()
+	
+	if slide_inp_pressed:
+		slide()
 	
 	c_body.move_and_slide()
 	
@@ -114,6 +125,10 @@ func dash():
 func gen_dash_energy(delta):
 	cur_dash_energy += delta * dash_energy_gen
 	cur_dash_energy = clamp(cur_dash_energy, 0.0, max_dash_energy)
+
+
+func slide():
+	pass
 
 
 func gravity(delta):
