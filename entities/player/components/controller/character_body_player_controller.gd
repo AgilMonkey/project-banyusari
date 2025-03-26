@@ -208,6 +208,7 @@ func landing():
 func wall_run():
 	if is_wall_running and jump_inp_just_pressed:
 		force_jump()
+		reset_jump_count()
 		is_wall_running = false
 		return
 	
@@ -267,6 +268,10 @@ func wall_run_visual():
 	
 	gfx_pivot.rotation.y = 0
 	gfx_pivot.rotation.z = 0
+
+
+func reset_jump_count():
+	jump_count = 0
 
 
 func add_force(force: Vector3):
