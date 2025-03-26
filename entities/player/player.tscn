@@ -34,25 +34,33 @@ collision_mask = 17
 script = ExtResource("1_wvtmh")
 
 [node name="ThirdPersonShoulderCamera" parent="." instance=ExtResource("2_qiwj3")]
+cam_pivot = Vector2(1.5, 1.5)
 
 [node name="Bow" parent="ThirdPersonShoulderCamera" instance=ExtResource("3_26q78")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_ehsmr")
 debug_color = Color(0.28866, 0.482431, 0.813503, 0.42)
 
-[node name="Gfx" type="MeshInstance3D" parent="."]
+[node name="GfxPivot" type="Node3D" parent="."]
+
+[node name="Gfx" type="MeshInstance3D" parent="GfxPivot"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 material_override = SubResource("StandardMaterial3D_3c3w1")
 mesh = SubResource("CapsuleMesh_ehsmr")
+skeleton = NodePath("../..")
 
-[node name="ForwardHead" type="MeshInstance3D" parent="Gfx"]
+[node name="ForwardHead" type="MeshInstance3D" parent="GfxPivot/Gfx"]
 transform = Transform3D(-4.37114e-08, -1.73433, 0, 1, -7.58099e-08, 0, 0, 0, 1, -1.04476e-08, 0.488153, -0.46743)
 visible = false
 material_override = SubResource("StandardMaterial3D_rgyib")
 mesh = SubResource("CapsuleMesh_g6k8r")
 
 [node name="PlayerHitbox" parent="." instance=ExtResource("10_wvtmh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_mask = 8
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerHitbox"]
@@ -60,7 +68,6 @@ shape = SubResource("CapsuleShape3D_wvtmh")
 debug_color = Color(0.28866, 0.482431, 0.813503, 0.42)
 
 [node name="CrouchRayCast" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 target_position = Vector3(0, 2, 0)
 
 [node name="HealthComponent" type="Node" parent="."]

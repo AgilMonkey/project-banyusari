@@ -47,8 +47,9 @@ var slide_inp_pressed := false
 @onready var c_body: CharacterBody3D = $".."
 @onready var cur_camera: Camera3D = get_viewport().get_camera_3d()
 @onready var collision_shape: CollisionShape3D = $"../CollisionShape3D"
-@onready var gfx: MeshInstance3D = $"../Gfx"
+@onready var gfx: MeshInstance3D = %"Gfx"
 @onready var crouch_ray_cast: RayCast3D = $"../CrouchRayCast"
+@onready var gfx_pivot: Node3D = $"../GfxPivot"
 
 
 func _ready() -> void:
@@ -201,7 +202,9 @@ func landing():
 
 
 func wall_run():
-	if Input.is_action_just_pressed("jump") and c_body.is_on_wall() and not c_body.is_on_floor():
+	var on_wall_not_floor = c_body.is_on_wall() and not c_body.is_on_floor()
+	var inp_jump_is_just_pressed = Input.is_action_just_pressed("jump")
+	if inp_jump_is_just_pressed and on_wall_not_floor and not is_wall_running:
 		is_wall_running = true
 		down_gravity = 5.0
 		c_body.velocity.y = 0.0
@@ -211,9 +214,10 @@ func wall_run():
 	
 	if is_wall_running:
 		hor_wall_run_move()
+	
+	wall_run_visual()
 
 
-# TODO Make a gizmo that show perpendicular wall stuff
 func hor_wall_run_move():
 	var cam_direction = cam_inp_dir
 	var target_vel = cam_direction * max_speed
@@ -225,13 +229,35 @@ func hor_wall_run_move():
 	var forward_or_backward_wall = -1 if sign(wall_cross.dot(vel_xz)) < 0 else 1
 	
 	var wall_run_dir = (wall_cross * forward_or_backward_wall).normalized()
-	var arrow_pos = c_body.position + wall_run_dir * 2.0
-	DebugDraw3D.draw_arrow(c_body.position, arrow_pos, Color.GREEN, 0.2)
+	#var arrow_pos = c_body.position + wall_run_dir * 2.0
+	#DebugDraw3D.draw_arrow(c_body.position, arrow_pos, Color.GREEN, 0.2)
 	
 	var reverse_wall_vel = -wall_normal_xz.normalized() * 1.0
-	var wall_run_vel = wall_run_dir * max_speed + reverse_wall_vel
+	var wall_run_vel = wall_run_dir * (max_speed + 5.0) + reverse_wall_vel
 	c_body.velocity.x = wall_run_vel.x
 	c_body.velocity.z = wall_run_vel.z
+
+
+# This thing is gonna bite me in the ass later
+# Maybe next time make them more modular?
+func wall_run_visual():
+	if is_wall_running:
+		var vel_xz = Vector3(c_body.velocity.x, 0, c_body.velocity.z)
+		var wall_normal = c_body.get_wall_normal()
+		var wall_normal_xz = Vector3(wall_normal.x, 0, wall_normal.z)
+		var wall_forward = wall_normal_xz.cross(Vector3.UP)
+		var forward_or_backward_wall = -1 if sign(wall_forward.dot(vel_xz)) < 0 else 1
+		
+		var hor_rot = atan2(wall_forward.x, wall_forward.z) - PI
+		gfx_pivot.rotation.y = hor_rot
+		
+		var cross = wall_normal.cross(wall_forward)
+		var is_left_right = absf(cross.y)
+		gfx_pivot.rotation.z = deg_to_rad(15 * is_left_right)
+		return
+	
+	gfx_pivot.rotation.y = 0
+	gfx_pivot.rotation.z = 0
 
 
 func add_force(force: Vector3):
