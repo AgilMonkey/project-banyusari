@@ -36,7 +36,7 @@ script = ExtResource("1_gu74f")
 
 [node name="MainCamera" type="Camera3D" parent="."]
 physics_interpolation_mode = 1
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.53631, 2.09511, 38.8303)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.03631, 3.59511, 38.8303)
 near = 0.001
 
 [node name="PhantomCameraHost" type="Node" parent="MainCamera"]

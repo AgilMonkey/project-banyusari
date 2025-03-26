@@ -34,7 +34,7 @@ collision_mask = 17
 script = ExtResource("1_wvtmh")
 
 [node name="ThirdPersonShoulderCamera" parent="." instance=ExtResource("2_qiwj3")]
-cam_pivot = Vector2(1.5, 1.5)
+cam_pivot = Vector2(0, 3)
 
 [node name="Bow" parent="ThirdPersonShoulderCamera" instance=ExtResource("3_26q78")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
