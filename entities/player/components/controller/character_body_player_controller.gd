@@ -205,7 +205,7 @@ func wall_run():
 		is_wall_running = true
 		down_gravity = 2.0
 		c_body.velocity.y = 0.0
-	elif not c_body.is_on_wall():
+	elif not c_body.is_on_wall() or c_body.is_on_floor():
 		is_wall_running = false
 		down_gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 	
@@ -216,12 +216,15 @@ func wall_run():
 # TODO Make a gizmo that show perpendicular wall stuff
 func hor_wall_run_move():
 	var wall_normal = c_body.get_wall_normal()
-	var wall_normal_xz = Vector3(wall_normal.x, 0, wall_normal.z)
+	var wall_normal_xz = Vector3(wall_normal.x, 0, wall_normal.z).normalized()
+	var wall_cross = wall_normal_xz.cross(Vector3.UP).normalized()
+	DebugDraw3D.draw_arrow(c_body.position, c_body.position + wall_cross * 2.0, Color.GREEN, 0.2)
+	
 	var cam_direction = cam_inp_dir
 	var target_vel = cam_direction * max_speed
 	
-	c_body.velocity.x = target_vel.x
-	c_body.velocity.z = target_vel.z
+	c_body.velocity.x = -wall_normal_xz.x * 1.0
+	c_body.velocity.z = -wall_normal_xz.z * 1.0
 
 
 func add_force(force: Vector3):
