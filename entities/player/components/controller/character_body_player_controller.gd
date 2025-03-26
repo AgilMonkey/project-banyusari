@@ -24,6 +24,8 @@ var cam_inp_dir := Vector3.ZERO:
 		var cam_direction = input_dir.rotated(Vector3.UP, cam_rotation_y)
 		return cam_direction
 
+@onready var down_gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+
 var jump_count := 0
 
 var is_in_air := false
@@ -33,6 +35,8 @@ var cur_dash_energy := 0.0
 
 var is_sliding := false
 var slide_dir := Vector3.ZERO
+
+var is_wall_running := false
 
 # INPUTS
 var jump_inp_just_pressed := false
@@ -74,7 +78,6 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	
 	is_in_air = not c_body.is_on_floor()
 	
 	if not is_dashing:
@@ -85,7 +88,9 @@ func _physics_process(delta: float) -> void:
 	
 	landing()
 	
-	if jump_inp_just_pressed:
+	wall_run()
+	
+	if jump_inp_just_pressed and not is_wall_running:
 		jump()
 	
 	if dash_inp_just_pressed and not is_dashing and not is_sliding:
@@ -187,13 +192,24 @@ func slide_change_p_size():
 
 
 func gravity(delta):
-	var down_force = ProjectSettings.get_setting("physics/3d/default_gravity")
-	c_body.velocity.y -= down_force * delta
+	c_body.velocity.y -= down_gravity * delta
 
 
 func landing():
 	if c_body.is_on_floor() and jump_count > 0:
 		jump_count = 0
+
+
+func wall_run():
+	print(is_wall_running)
+	
+	if Input.is_action_just_pressed("jump") and c_body.is_on_wall():
+		is_wall_running = true
+		down_gravity = 2.0
+		c_body.velocity.y = 0.0
+	elif not c_body.is_on_wall() or not is_in_air:
+		is_wall_running = false
+		down_gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 
 func add_force(force: Vector3):
