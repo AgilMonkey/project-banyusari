@@ -36,7 +36,11 @@ var cur_dash_energy := 0.0
 var is_sliding := false
 var slide_dir := Vector3.ZERO
 
+@export var jump_off_wall_timer_max := 0.4
 var is_wall_running := false
+var is_jumping_off_wall := false
+var jump_off_wall_timer: float
+var last_wall_normal: Vector3
 
 # INPUTS
 var jump_inp_just_pressed := false
@@ -84,12 +88,14 @@ func _physics_process(delta: float) -> void:
 	if not is_dashing:
 		gravity(delta)
 	
-	if not is_dashing and not is_sliding and not is_wall_running:
+	if not is_dashing and not is_sliding and not is_wall_running and not is_jumping_off_wall:
 		horizontal_movement(delta)
 	
 	landing()
 	
 	wall_run()
+	if is_jumping_off_wall:
+		hor_move_when_jumping_off_wall(delta)
 	
 	if jump_inp_just_pressed and not is_wall_running:
 		jump()
@@ -210,6 +216,7 @@ func wall_run():
 		force_jump()
 		reset_jump_count()
 		is_wall_running = false
+		is_jumping_off_wall = true
 		return
 	
 	var on_wall_not_floor = c_body.is_on_wall() and not c_body.is_on_floor()
@@ -246,6 +253,8 @@ func hor_wall_run_move():
 	var wall_run_vel = wall_run_dir * (max_speed + 5.0) + reverse_wall_vel
 	c_body.velocity.x = wall_run_vel.x
 	c_body.velocity.z = wall_run_vel.z
+	
+	last_wall_normal = wall_normal
 
 
 # This thing is gonna bite me in the ass later
@@ -268,6 +277,29 @@ func wall_run_visual():
 	
 	gfx_pivot.rotation.y = 0
 	gfx_pivot.rotation.z = 0
+
+
+func hor_move_when_jumping_off_wall(delta):
+	if jump_off_wall_timer < jump_off_wall_timer_max:
+		jump_off_wall_timer += delta
+		jump_off_wall()
+	else:
+		jump_off_wall_timer = 0
+		is_jumping_off_wall = false
+
+
+func jump_off_wall():
+	if last_wall_normal.length_squared() < 0.1: return
+	
+	var wall_normal_xz = Vector3(last_wall_normal.x, 0, last_wall_normal.z)
+	var wall_cross = -wall_normal_xz.cross(Vector3.UP)
+	var vel_xz = Vector3(c_body.velocity.x, 0, c_body.velocity.z)
+	var forward_or_backward_wall = -1 if sign(wall_cross.dot(vel_xz)) < 0 else 1
+	var wall_forward = wall_cross * forward_or_backward_wall
+	var jump_off_hor_dir = (wall_normal_xz.normalized() + wall_forward.normalized() * 1.1).normalized()
+	var jump_off_xz = jump_off_hor_dir * 18.0
+	c_body.velocity.x = jump_off_xz.x
+	c_body.velocity.z = jump_off_xz.z
 
 
 func reset_jump_count():
