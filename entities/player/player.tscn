@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
 [ext_resource type="Script" uid="uid://ccxmtexq3jnpw" path="res://entities/player/player.gd" id="1_wvtmh"]
-[ext_resource type="PackedScene" uid="uid://d1ioa0w526oeu" path="res://entities/player/components/tps_camera/third_person_camera.tscn" id="2_qiwj3"]
+[ext_resource type="PackedScene" uid="uid://d1ioa0w526oeu" path="res://entities/player/components/tps_camera/third_person_shoulder_camera.tscn" id="2_qiwj3"]
 [ext_resource type="PackedScene" uid="uid://y03uoupivlg2" path="res://entities/player/components/bow/bow.tscn" id="3_26q78"]
 [ext_resource type="Texture2D" uid="uid://dgbqyo2d0uqc" path="res://assets/kenney_prototype_textures/PNG/Orange/texture_09.png" id="6_boad6"]
 [ext_resource type="Script" uid="uid://cnwekxsl403tl" path="res://commons/components/health/health_component.gd" id="9_bectd"]
@@ -33,9 +33,9 @@ collision_layer = 2
 collision_mask = 17
 script = ExtResource("1_wvtmh")
 
-[node name="ThirdPersonCamera" parent="." instance=ExtResource("2_qiwj3")]
+[node name="ThirdPersonShoulderCamera" parent="." instance=ExtResource("2_qiwj3")]
 
-[node name="Bow" parent="ThirdPersonCamera" instance=ExtResource("3_26q78")]
+[node name="Bow" parent="ThirdPersonShoulderCamera" instance=ExtResource("3_26q78")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
