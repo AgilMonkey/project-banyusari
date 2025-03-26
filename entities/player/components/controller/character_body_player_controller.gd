@@ -83,7 +83,7 @@ func _physics_process(delta: float) -> void:
 	if not is_dashing:
 		gravity(delta)
 	
-	if not is_dashing and not is_sliding:
+	if not is_dashing and not is_sliding and not is_wall_running:
 		horizontal_movement(delta)
 	
 	landing()
@@ -202,12 +202,11 @@ func landing():
 
 func wall_run():
 	print(is_wall_running)
-	
 	if Input.is_action_just_pressed("jump") and c_body.is_on_wall():
 		is_wall_running = true
 		down_gravity = 2.0
 		c_body.velocity.y = 0.0
-	elif not c_body.is_on_wall() or not is_in_air:
+	elif not c_body.is_on_wall() and not is_in_air:
 		is_wall_running = false
 		down_gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
