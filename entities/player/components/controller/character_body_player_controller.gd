@@ -126,6 +126,10 @@ func jump():
 		c_body.velocity.y = jump_force
 		jump_count += 1
 
+func force_jump():
+	c_body.velocity.y = jump_force
+	jump_count += 1
+
 
 func dash():
 	if cur_dash_energy < dash_energy_req:
@@ -202,6 +206,11 @@ func landing():
 
 
 func wall_run():
+	if is_wall_running and jump_inp_just_pressed:
+		force_jump()
+		is_wall_running = false
+		return
+	
 	var on_wall_not_floor = c_body.is_on_wall() and not c_body.is_on_floor()
 	var inp_jump_is_just_pressed = Input.is_action_just_pressed("jump")
 	if inp_jump_is_just_pressed and on_wall_not_floor and not is_wall_running:
