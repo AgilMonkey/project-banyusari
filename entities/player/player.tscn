@@ -1,22 +1,13 @@
-[gd_scene load_steps=19 format=3 uid="uid://dgj5e4tlh6l65"]
+[gd_scene load_steps=15 format=3 uid="uid://dgj5e4tlh6l65"]
 
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
 [ext_resource type="Script" uid="uid://ccxmtexq3jnpw" path="res://entities/player/player.gd" id="1_wvtmh"]
-[ext_resource type="Script" uid="uid://dev8u4fgli83y" path="res://entities/player/components/shoulder_cam/shoulder_cam2.gd" id="2_7thud"]
-[ext_resource type="Script" uid="uid://ubkolvwgwumg" path="res://entities/player/components/shoot_projectile_to_camera.gd" id="2_rgyib"]
-[ext_resource type="Script" uid="uid://bur14kb6xyx8y" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_g6k8r"]
-[ext_resource type="Script" uid="uid://pq1j7fjytppm" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_yw30f"]
-[ext_resource type="Script" uid="uid://ba6i3324bwauo" path="res://entities/player/components/3d_camera_controller.gd" id="4_g6k8r"]
+[ext_resource type="PackedScene" uid="uid://d1ioa0w526oeu" path="res://entities/player/components/tps_camera/third_person_camera.tscn" id="2_qiwj3"]
+[ext_resource type="PackedScene" uid="uid://y03uoupivlg2" path="res://entities/player/components/bow/bow.tscn" id="3_26q78"]
 [ext_resource type="Texture2D" uid="uid://dgbqyo2d0uqc" path="res://assets/kenney_prototype_textures/PNG/Orange/texture_09.png" id="6_boad6"]
 [ext_resource type="Script" uid="uid://cnwekxsl403tl" path="res://commons/components/health/health_component.gd" id="9_bectd"]
 [ext_resource type="PackedScene" uid="uid://dso1a8gi82pe5" path="res://commons/components/hitbox/hitbox_component.tscn" id="10_wvtmh"]
-[ext_resource type="Script" uid="uid://cdl3la0h370ea" path="res://entities/player/components/character_body_player_controller.gd" id="11_7thud"]
-
-[sub_resource type="Resource" id="Resource_boad6"]
-script = ExtResource("3_g6k8r")
-duration = 1.0
-transition = 0
-ease = 2
+[ext_resource type="Script" uid="uid://cdl3la0h370ea" path="res://entities/player/components/controller/character_body_player_controller.gd" id="11_7thud"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ehsmr"]
 
@@ -42,37 +33,10 @@ collision_layer = 2
 collision_mask = 17
 script = ExtResource("1_wvtmh")
 
-[node name="CamPivot" type="Node3D" parent="."]
+[node name="ThirdPersonCamera" parent="." instance=ExtResource("2_qiwj3")]
 
-[node name="ShoulderSpringArm" type="SpringArm3D" parent="CamPivot"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.7, 0)
-spring_length = 1.6
-margin = 0.5
-script = ExtResource("2_7thud")
-cam_length = 5.0
-cam_pivot = Vector2(1.6, 0.7)
-
-[node name="ZSpringArm" type="SpringArm3D" parent="CamPivot/ShoulderSpringArm"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 1.6)
-spring_length = 4.68508
-margin = 0.5
-
-[node name="PhantomCamera3D" type="Node3D" parent="CamPivot/ShoulderSpringArm/ZSpringArm"]
-transform = Transform3D(0.999978, 0, 0, 0, 0.999829, 0, 0, 0, 0.999962, 0, 0, 5)
-script = ExtResource("3_yw30f")
-tween_resource = SubResource("Resource_boad6")
-tween_on_load = false
-follow_damping = true
-follow_distance = 8.0
-spring_length = 8.0
-metadata/_custom_type_script = "uid://pq1j7fjytppm"
-
-[node name="Bow" type="Node3D" parent="CamPivot"]
+[node name="Bow" parent="ThirdPersonCamera" instance=ExtResource("3_26q78")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
-script = ExtResource("2_rgyib")
-
-[node name="3DCameraController" type="Node" parent="CamPivot"]
-script = ExtResource("4_g6k8r")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_ehsmr")
