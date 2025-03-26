@@ -203,7 +203,7 @@ func landing():
 func wall_run():
 	if Input.is_action_just_pressed("jump") and c_body.is_on_wall() and not c_body.is_on_floor():
 		is_wall_running = true
-		down_gravity = 2.0
+		down_gravity = 5.0
 		c_body.velocity.y = 0.0
 	elif not c_body.is_on_wall() or c_body.is_on_floor():
 		is_wall_running = false
@@ -215,16 +215,23 @@ func wall_run():
 
 # TODO Make a gizmo that show perpendicular wall stuff
 func hor_wall_run_move():
-	var wall_normal = c_body.get_wall_normal()
-	var wall_normal_xz = Vector3(wall_normal.x, 0, wall_normal.z).normalized()
-	var wall_cross = wall_normal_xz.cross(Vector3.UP).normalized()
-	DebugDraw3D.draw_arrow(c_body.position, c_body.position + wall_cross * 2.0, Color.GREEN, 0.2)
-	
 	var cam_direction = cam_inp_dir
 	var target_vel = cam_direction * max_speed
+	var vel_xz = Vector3(c_body.velocity.x, 0, c_body.velocity.z)
 	
-	c_body.velocity.x = -wall_normal_xz.x * 1.0
-	c_body.velocity.z = -wall_normal_xz.z * 1.0
+	var wall_normal = c_body.get_wall_normal()
+	var wall_normal_xz = Vector3(wall_normal.x, 0, wall_normal.z)
+	var wall_cross = wall_normal_xz.cross(Vector3.UP)
+	var forward_or_backward_wall = -1 if sign(wall_cross.dot(vel_xz)) < 0 else 1
+	
+	var wall_run_dir = (wall_cross * forward_or_backward_wall).normalized()
+	var arrow_pos = c_body.position + wall_run_dir * 2.0
+	DebugDraw3D.draw_arrow(c_body.position, arrow_pos, Color.GREEN, 0.2)
+	
+	var reverse_wall_vel = -wall_normal_xz.normalized() * 1.0
+	var wall_run_vel = wall_run_dir * max_speed + reverse_wall_vel
+	c_body.velocity.x = wall_run_vel.x
+	c_body.velocity.z = wall_run_vel.z
 
 
 func add_force(force: Vector3):
