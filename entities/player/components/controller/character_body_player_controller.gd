@@ -90,8 +90,21 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	is_in_air = not c_body.is_on_floor()
 	
+	wall_run()
+	if is_jumping_off_wall:
+		hor_move_when_jumping_off_wall(delta)
+	
+	if slide_inp_pressed and not is_in_air:
+		slide(delta)
+	else:
+		is_sliding = false
+		slide_dir = Vector3.ZERO
+	slide_change_p_size()
+	
 	if not is_dashing:
 		gravity(delta)
+	
+	landing()
 	
 	var can_hor_move = not is_dashing and not is_sliding and not is_wall_running and not is_jumping_off_wall
 	if can_hor_move:
@@ -99,19 +112,6 @@ func _physics_process(delta: float) -> void:
 			horizontal_movement(delta)
 		elif is_in_air:
 			air_horizontal_movement(delta)
-	
-	landing()
-	
-	wall_run()
-	if is_jumping_off_wall:
-		hor_move_when_jumping_off_wall(delta)
-	
-	if slide_inp_pressed and not is_in_air:
-		slide()
-	else:
-		is_sliding = false
-		slide_dir = Vector3.ZERO
-	slide_change_p_size()
 	
 	if jump_inp_just_pressed and not is_wall_running:
 		jump()
@@ -125,21 +125,20 @@ func _physics_process(delta: float) -> void:
 	# INPUT STUFF
 	jump_inp_just_pressed = false
 	dash_inp_just_pressed = false
-	
-	#print(c_body.velocity.length())
-
 
 func horizontal_movement(delta):
 	var vel_speed = c_body.velocity.length()
 	var cam_direction = cam_inp_dir
 	var target_vel = cam_direction * max_speed
 	
-	var vel_on_slope = vel_on_slope(target_vel) 
+	var vel_on_slope = vel_on_slope(target_vel)
+	
 	
 	var lerp_vel = c_body.velocity.lerp(
-		target_vel, 
+		vel_on_slope, 
 		0.08 + delta * (acceleration / max_speed)
 		)
+	
 	c_body.velocity = lerp_vel
 
 
@@ -149,13 +148,13 @@ func vel_on_slope(target_vel: Vector3) -> Vector3:
 	var floor_forward: Vector3 = floor_normal.cross(floor_cross).normalized()
 	
 	var vel_len = target_vel.length()
-	return (floor_forward * vel_len) + hold_on_slope_force()
+	return (floor_forward * vel_len)
 
 
 func hold_on_slope_force() -> Vector3:
 	var floor_normal: Vector3 = c_body.get_floor_normal()
-	var stop_force: float = minf(c_body.velocity.length() * 0.25, 10.0)
-	return -floor_normal * stop_force
+	var slope_stop_force = 2.0
+	return -floor_normal * slope_stop_force
 
 
 func air_horizontal_movement(delta):
@@ -229,13 +228,16 @@ func gen_dash_energy(delta):
 	cur_dash_energy = clamp(cur_dash_energy, 0.0, max_dash_energy)
 
 
-func slide():
+func slide(delta):
 	is_sliding = true
 	
 	slide_dir = get_slide_dir()
 	var target_vel = slide_dir * slide_max_speed
-	
-	c_body.velocity = vel_on_slope(target_vel)
+	var lerp_vel = c_body.velocity.lerp(
+		vel_on_slope(target_vel), 
+		0.08 + delta * (acceleration / max_speed)
+		)
+	c_body.velocity = lerp_vel
 
 
 func get_slide_dir():
@@ -310,8 +312,6 @@ func hor_wall_run_move():
 	var forward_or_backward_wall = -1 if sign(wall_cross.dot(vel_xz)) < 0 else 1
 	
 	var wall_run_dir = (wall_cross * forward_or_backward_wall).normalized()
-	#var arrow_pos = c_body.position + wall_run_dir * 2.0
-	#DebugDraw3D.draw_arrow(c_body.position, arrow_pos, Color.GREEN, 0.2)
 	
 	var reverse_wall_vel = -wall_normal_xz.normalized() * 1.0
 	var wall_run_vel = wall_run_dir * (max_speed + 5.0) + reverse_wall_vel
