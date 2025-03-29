@@ -13,21 +13,19 @@ ease = 2
 
 [node name="ThirdPersonShoulderCamera" type="Node3D"]
 script = ExtResource("1_wm1rl")
-cam_length = 10.0
-cam_pivot = Vector2(0, 1.8)
 
 [node name="ShoulderSpringArm" type="SpringArm3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.8, 0)
-spring_length = 0.0
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.6, 0)
+spring_length = 1.2
 margin = 0.5
 
 [node name="ZSpringArm" type="SpringArm3D" parent="ShoulderSpringArm"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-spring_length = 9.83667
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 1.2)
+spring_length = 7.8867
 margin = 0.5
 
 [node name="PhantomCamera3D" type="Node3D" parent="ShoulderSpringArm/ZSpringArm"]
-transform = Transform3D(0.999978, 0, 0, 0, 0.999829, 0, 0, 0, 0.999962, 0, 0, 10)
+transform = Transform3D(0.999978, 0, 0, 0, 0.999829, 0, 0, 0, 0.999962, 0, 0, 8)
 script = ExtResource("2_ncrgt")
 tween_resource = SubResource("Resource_boad6")
 tween_on_load = false

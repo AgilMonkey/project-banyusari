@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://f61iyllvlbvs"]
+[gd_scene load_steps=13 format=3 uid="uid://f61iyllvlbvs"]
 
 [ext_resource type="Script" uid="uid://ie1qmsxg50dl" path="res://entities/enemy/musuh.gd" id="1_31ws8"]
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_oerhp"]
@@ -20,6 +20,9 @@ uv1_triplanar = true
 radius = 0.52
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kngvk"]
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_cv1aj"]
+length = 0.5
 
 [node name="Musuh" type="CharacterBody3D" groups=["enemy"]]
 collision_layer = 16
@@ -51,12 +54,16 @@ shape = SubResource("CapsuleShape3D_kngvk")
 debug_color = Color(0.24029, 0.571065, 0.363851, 0.42)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+simplify_path = true
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("4_5be2r")
 
 [node name="FollowPlayer" type="Node" parent="."]
 script = ExtResource("6_cv1aj")
-speed = 17.0
+
+[node name="FloorStepUp" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.5, -0.55)
+shape = SubResource("SeparationRayShape3D_cv1aj")
 
 [connection signal="health_reached_zero" from="HealthComponent" to="." method="_on_health_component_health_reached_zero"]

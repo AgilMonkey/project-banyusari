@@ -20,5 +20,7 @@ func _physics_process(delta: float) -> void:
 	var local_destination = destination - character.global_position
 	var direction = local_destination.normalized()
 	
+	#DebugDraw3D.draw_arrow(character.position, character.position + direction * 2.0, Color.GREEN, 0.2)
+	
 	character.velocity = direction * speed
 	character.move_and_slide()

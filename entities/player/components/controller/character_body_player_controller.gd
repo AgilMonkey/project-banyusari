@@ -4,15 +4,16 @@ extends Node
 signal on_dash_val_changed(cur_energy, max_dash, dash_req)
 
 @export var max_speed := 15.0
-@export var acceleration := 14.0
+@export var acceleration := 50.0
+@export var air_accel := 35.0
 @export var stop_accel := 15.0
 @export var jump_force := 15.0
 @export var max_jump := 2
-@export var dash_force := 40.0
+@export var dash_force := 30.0
 @export var dash_time := 0.15
 @export var max_dash_energy := 3.0
-@export var dash_energy_gen := 1.0
-@export var dash_energy_gen_in_air := 0.7
+@export var dash_energy_gen := 0.5
+@export var dash_energy_gen_in_air := 0.5
 @export var dash_energy_req := 1.0
 @export var slide_max_speed := 18.0
 
@@ -88,20 +89,18 @@ func _physics_process(delta: float) -> void:
 	if not is_dashing:
 		gravity(delta)
 	
-	if not is_dashing and not is_sliding and not is_wall_running and not is_jumping_off_wall:
-		horizontal_movement(delta)
+	var can_hor_move = not is_dashing and not is_sliding and not is_wall_running and not is_jumping_off_wall
+	if can_hor_move:
+		if not is_in_air:
+			horizontal_movement(delta)
+		elif is_in_air:
+			air_horizontal_movement(delta)
 	
 	landing()
 	
 	wall_run()
 	if is_jumping_off_wall:
 		hor_move_when_jumping_off_wall(delta)
-	
-	if jump_inp_just_pressed and not is_wall_running:
-		jump()
-	
-	if dash_inp_just_pressed and not is_dashing and not is_sliding:
-		dash()
 	
 	if slide_inp_pressed and not is_in_air:
 		slide()
@@ -110,29 +109,86 @@ func _physics_process(delta: float) -> void:
 		slide_dir = Vector3.ZERO
 	slide_change_p_size()
 	
+	if jump_inp_just_pressed and not is_wall_running:
+		jump()
+	
+	if dash_inp_just_pressed and not is_dashing and not is_sliding:
+		is_jumping_off_wall = false
+		dash()
+	
 	c_body.move_and_slide()
 	
 	# INPUT STUFF
 	jump_inp_just_pressed = false
 	dash_inp_just_pressed = false
+	
+	#print(c_body.velocity.length())
 
 
 func horizontal_movement(delta):
+	var vel_speed = c_body.velocity.length()
 	var cam_direction = cam_inp_dir
 	var target_vel = cam_direction * max_speed
-	var next_vel = cam_direction * acceleration * delta
 	
-	c_body.velocity.x = target_vel.x
-	c_body.velocity.z = target_vel.z
+	var vel_on_slope = vel_on_slope(target_vel) 
+	
+	var lerp_vel = c_body.velocity.lerp(
+		target_vel, 
+		0.08 + delta * (acceleration / max_speed)
+		)
+	c_body.velocity = lerp_vel
+
+
+func vel_on_slope(target_vel: Vector3) -> Vector3:
+	var floor_normal: Vector3 = c_body.get_floor_normal()
+	var floor_cross: Vector3 = target_vel.cross(floor_normal)
+	var floor_forward: Vector3 = floor_normal.cross(floor_cross).normalized()
+	
+	var vel_len = target_vel.length()
+	return (floor_forward * vel_len) + hold_on_slope_force()
+
+
+func hold_on_slope_force() -> Vector3:
+	var floor_normal: Vector3 = c_body.get_floor_normal()
+	var stop_force: float = minf(c_body.velocity.length() * 0.25, 10.0)
+	return -floor_normal * stop_force
+
+
+func air_horizontal_movement(delta):
+	var vel_speed = c_body.velocity.length()
+	var cam_direction = cam_inp_dir
+	var movement_force = cam_direction * air_accel * delta
+	
+	c_body.velocity.x += movement_force.x
+	c_body.velocity.z += movement_force.z
+	
+	var vel_xz = Vector3(c_body.velocity.x, 0, c_body.velocity.z)
+	var vel_xz_clamp = vel_xz.limit_length(max_speed)
+	c_body.velocity.x = vel_xz_clamp.x
+	c_body.velocity.z = vel_xz_clamp.z
 
 
 func jump():
+	var is_air_jump = jump_count > 0
+	var have_energy = cur_dash_energy >= dash_energy_req
+	if is_air_jump and not have_energy:
+		return
+	
 	var can_jump = c_body.is_on_floor() or jump_count < max_jump
 	if can_jump:
 		c_body.velocity.y = jump_force
 		jump_count += 1
+		
+		if max_jump - jump_count == 0:
+			cur_dash_energy -= dash_energy_req
+
 
 func force_jump():
+	var is_air_jump = jump_count > 0
+	var have_energy = cur_dash_energy >= dash_energy_req
+	if is_air_jump and not have_energy:
+		return
+	
 	c_body.velocity.y = jump_force
 	jump_count += 1
 
@@ -153,11 +209,12 @@ func dash():
 		dash_direction = Vector3.FORWARD.rotated(Vector3.UP, cam_rotation_y)
 	
 	var dash_force = dash_direction * dash_force
-	c_body.velocity = dash_force
+	c_body.velocity.y = 0
+	c_body.velocity += dash_force
 
 
 func gen_dash_energy(delta):
-	if not is_in_air and not is_sliding:
+	if c_body.is_on_floor():
 		cur_dash_energy += delta * dash_energy_gen
 	else:
 		cur_dash_energy += delta * dash_energy_gen_in_air
@@ -170,8 +227,7 @@ func slide():
 	slide_dir = get_slide_dir()
 	var target_vel = slide_dir * slide_max_speed
 	
-	c_body.velocity.x = target_vel.x
-	c_body.velocity.z = target_vel.z
+	c_body.velocity = vel_on_slope(target_vel)
 
 
 func get_slide_dir():
@@ -258,7 +314,7 @@ func hor_wall_run_move():
 
 
 # This thing is gonna bite me in the ass later
-# Maybe next time make them more modular?
+# TODO make them more modular
 func wall_run_visual():
 	if is_wall_running:
 		var vel_xz = Vector3(c_body.velocity.x, 0, c_body.velocity.z)
