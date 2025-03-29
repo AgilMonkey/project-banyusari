@@ -1,3 +1,7 @@
+## A crappy character controller. There are probably some that are more crappier
+## but this one is "my" crappy controller. And I have an abusive relationship
+## with it
+
 extends Node
 
 
@@ -155,14 +159,18 @@ func hold_on_slope_force() -> Vector3:
 
 
 func air_horizontal_movement(delta):
+	var vel_xz = Vector3(c_body.velocity.x, 0, c_body.velocity.z)
 	var vel_speed = c_body.velocity.length()
 	var cam_direction = cam_inp_dir
-	var movement_force = cam_direction * air_accel * delta
+	var target_vel = cam_direction * max_speed
+	var vel_to_target_vel = target_vel - vel_xz
+	var vel_to_target_vel_dir = vel_to_target_vel.normalized()
+	var movement_force = vel_to_target_vel_dir * air_accel * delta
 	
 	c_body.velocity.x += movement_force.x
 	c_body.velocity.z += movement_force.z
 	
-	var vel_xz = Vector3(c_body.velocity.x, 0, c_body.velocity.z)
+	vel_xz = Vector3(c_body.velocity.x, 0, c_body.velocity.z)
 	var vel_xz_clamp = vel_xz.limit_length(max_speed)
 	c_body.velocity.x = vel_xz_clamp.x
 	c_body.velocity.z = vel_xz_clamp.z
