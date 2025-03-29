@@ -361,7 +361,7 @@ func jump_off_wall():
 	var forward_or_backward_wall = -1 if sign(wall_cross.dot(vel_xz)) < 0 else 1
 	var wall_forward = wall_cross * forward_or_backward_wall
 	var jump_off_hor_dir = (wall_normal_xz.normalized() + wall_forward.normalized() * 1.1).normalized()
-	var jump_off_xz = jump_off_hor_dir * 18.0
+	var jump_off_xz = jump_off_hor_dir * 25.0
 	c_body.velocity.x = jump_off_xz.x
 	c_body.velocity.z = jump_off_xz.z
 
