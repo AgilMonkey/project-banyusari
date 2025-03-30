@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dgj5e4tlh6l65"]
+[gd_scene load_steps=16 format=3 uid="uid://dgj5e4tlh6l65"]
 
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
 [ext_resource type="Script" uid="uid://ccxmtexq3jnpw" path="res://entities/player/player.gd" id="1_wvtmh"]
@@ -28,6 +28,10 @@ height = 0.416
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wvtmh"]
 
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_26q78"]
+length = 0.7
+slide_on_slope = true
+
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_layer = 2
 collision_mask = 17
@@ -35,17 +39,17 @@ floor_snap_length = 0.3
 platform_on_leave = 2
 script = ExtResource("1_wvtmh")
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ehsmr")
+debug_color = Color(0.28866, 0.482431, 0.813503, 0.42)
+
 [node name="ThirdPersonShoulderCamera" parent="." instance=ExtResource("2_qiwj3")]
 
 [node name="Bow" parent="ThirdPersonShoulderCamera" instance=ExtResource("3_26q78")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_ehsmr")
-debug_color = Color(0.28866, 0.482431, 0.813503, 0.42)
-
 [node name="GfxPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
 [node name="Gfx" type="MeshInstance3D" parent="GfxPivot"]
 unique_name_in_owner = true
@@ -61,15 +65,32 @@ material_override = SubResource("StandardMaterial3D_rgyib")
 mesh = SubResource("CapsuleMesh_g6k8r")
 
 [node name="PlayerHitbox" parent="." instance=ExtResource("10_wvtmh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_mask = 8
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerHitbox"]
 shape = SubResource("CapsuleShape3D_wvtmh")
-debug_color = Color(0.28866, 0.482431, 0.813503, 0.42)
+debug_color = Color(0.849668, 0.352599, 0.166262, 0.42)
 
 [node name="CrouchRayCast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 target_position = Vector3(0, 2, 0)
+
+[node name="FloorStepRayForward" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.3, -0.52)
+shape = SubResource("SeparationRayShape3D_26q78")
+debug_color = Color(0.89, 0.2937, 0.35333, 0.733333)
+
+[node name="RayCheckFloor" type="RayCast3D" parent="FloorStepRayForward"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.5, 0.65)
+target_position = Vector3(0, 0, 1)
+debug_shape_custom_color = Color(0, 0, 0, 0.462745)
+
+[node name="FloorStepPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="FloorStepF" type="RemoteTransform3D" parent="FloorStepPivot"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.7, -0.52)
+remote_path = NodePath("../../FloorStepRayForward")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("9_bectd")

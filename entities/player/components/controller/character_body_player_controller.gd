@@ -59,6 +59,9 @@ var slide_inp_pressed := false
 @onready var gfx: MeshInstance3D = %"Gfx"
 @onready var crouch_ray_cast: RayCast3D = $"../CrouchRayCast"
 @onready var gfx_pivot: Node3D = $"../GfxPivot"
+@onready var floor_step_pivot: Node3D = $"../FloorStepPivot"
+@onready var floor_step_ray_f: CollisionShape3D = $"../FloorStepRayForward"
+@onready var ray_check_floor_f: RayCast3D = $"../FloorStepRayForward/RayCheckFloor"
 
 
 func _ready() -> void:
@@ -113,6 +116,8 @@ func _physics_process(delta: float) -> void:
 		elif is_in_air:
 			air_horizontal_movement(delta)
 	
+	floor_step()
+	
 	if jump_inp_just_pressed and not is_wall_running:
 		jump()
 	
@@ -135,7 +140,7 @@ func horizontal_movement(delta):
 	
 	
 	var lerp_vel = c_body.velocity.lerp(
-		vel_on_slope, 
+		target_vel, 
 		0.08 + delta * (acceleration / max_speed)
 		)
 	
@@ -173,6 +178,25 @@ func air_horizontal_movement(delta):
 	var vel_xz_clamp = vel_xz.limit_length(max_speed)
 	c_body.velocity.x = vel_xz_clamp.x
 	c_body.velocity.z = vel_xz_clamp.z
+
+
+func floor_step():
+	if input_dir.length_squared() == 0:
+		return
+	
+	var step_normal = ray_check_floor_f.get_collision_normal()
+	var is_a_step = step_normal.y <= 0.01
+	if is_a_step:
+		floor_step_ray_f.disabled = false
+	else:
+		floor_step_ray_f.disabled = true
+	
+	
+	
+	var cam_dir = cam_inp_dir
+	var cam_dir_xz = Vector3(cam_dir.x, 0, cam_dir.z)
+	var y_angle = Vector3.FORWARD.signed_angle_to(cam_dir_xz, Vector3.UP)
+	floor_step_pivot.rotation.y = y_angle
 
 
 func jump():
@@ -253,15 +277,13 @@ func get_slide_dir():
 
 func slide_change_p_size():
 	if is_sliding:
-		gfx.position.y = -0.5
-		gfx.scale.y = 0.5
+		gfx_pivot.scale.y = 0.5
 		
 		var col_shape: CapsuleShape3D = collision_shape.shape
 		collision_shape.position.y = -0.5
 		col_shape.height = 1.0
 	elif not crouch_ray_cast.is_colliding():
-		gfx.position.y = 0.0
-		gfx.scale.y = 1.0
+		gfx_pivot.scale.y = 1.0
 		
 		var col_shape: CapsuleShape3D = collision_shape.shape
 		collision_shape.position.y = 0.0
