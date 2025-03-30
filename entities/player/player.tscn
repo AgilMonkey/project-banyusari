@@ -49,11 +49,9 @@ debug_color = Color(0.28866, 0.482431, 0.813503, 0.42)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
 
 [node name="GfxPivot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
 [node name="Gfx" type="MeshInstance3D" parent="GfxPivot"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 material_override = SubResource("StandardMaterial3D_3c3w1")
 mesh = SubResource("CapsuleMesh_ehsmr")
 skeleton = NodePath("../..")

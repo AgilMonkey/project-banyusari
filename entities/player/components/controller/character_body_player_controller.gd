@@ -138,9 +138,8 @@ func horizontal_movement(delta):
 	
 	var vel_on_slope = vel_on_slope(target_vel)
 	
-	
 	var lerp_vel = c_body.velocity.lerp(
-		target_vel, 
+		vel_on_slope, 
 		0.08 + delta * (acceleration / max_speed)
 		)
 	
@@ -277,12 +276,14 @@ func get_slide_dir():
 
 func slide_change_p_size():
 	if is_sliding:
+		gfx_pivot.position.y = -0.5
 		gfx_pivot.scale.y = 0.5
 		
 		var col_shape: CapsuleShape3D = collision_shape.shape
 		collision_shape.position.y = -0.5
 		col_shape.height = 1.0
 	elif not crouch_ray_cast.is_colliding():
+		gfx_pivot.position.y = 0.0
 		gfx_pivot.scale.y = 1.0
 		
 		var col_shape: CapsuleShape3D = collision_shape.shape
