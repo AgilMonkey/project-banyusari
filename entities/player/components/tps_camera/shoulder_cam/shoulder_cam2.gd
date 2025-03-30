@@ -1,14 +1,20 @@
 @tool
-extends SpringArm3D
+extends Node3D
 
 
 ## IDK A FUCKING STUPID TOOL FOR AUTOMATING THE SPRING LENGTH SHIT IDFK
 
 
 @export var cam_length := 8.0
-@export var cam_pivot := Vector2.ZERO
+@export var cam_pivot := Vector2(1.2, 0.6)
 
-@onready var z_spring_arm: SpringArm3D = get_child(0)
+var spring_arm_x: SpringArm3D
+var spring_arm_z: SpringArm3D
+
+
+func _ready() -> void:
+	spring_arm_x = Utility.find_type(self, SpringArm3D)
+	spring_arm_z = spring_arm_x.get_child(0)
 
 
 func _process(delta: float) -> void:
@@ -21,23 +27,23 @@ func _process(delta: float) -> void:
 
 
 func change_spring_arm_length(offset):
-	position.y = cam_pivot.y
-	spring_length = offset.x
-	z_spring_arm.spring_length = offset.z
+	spring_arm_x.position.y = cam_pivot.y
+	spring_arm_x.spring_length = offset.x
+	spring_arm_z.spring_length = offset.z
 	
-	rotation.y = deg_to_rad(90)
-	z_spring_arm.rotation.y = deg_to_rad(-90)
+	spring_arm_x.rotation.y = deg_to_rad(90)
+	spring_arm_z.rotation.y = deg_to_rad(-90)
 	
-	z_spring_arm.margin = margin
-	z_spring_arm.collision_mask = collision_mask
+	spring_arm_z.margin = spring_arm_x.margin
+	spring_arm_z.collision_mask = spring_arm_x.collision_mask
 
 
 func offset_child(offset):
-	z_spring_arm.position.x = 0
-	z_spring_arm.position.y = 0
-	z_spring_arm.position.z = cam_pivot.x
+	spring_arm_z.position.x = 0
+	spring_arm_z.position.y = 0
+	spring_arm_z.position.z = cam_pivot.x
 	
-	for child in z_spring_arm.get_children():
+	for child in spring_arm_z.get_children():
 		child.position.x = 0
 		child.position.y = 0
 		child.position.z = cam_length

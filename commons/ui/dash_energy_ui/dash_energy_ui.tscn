@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://dg8g84qwgl56i"]
+
+[ext_resource type="Script" uid="uid://djk6j665dkppo" path="res://commons/ui/dash_energy_ui/dash_energy_ui.gd" id="1_eglne"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eglne"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="DashEnergyUi" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_eglne")
+
+[node name="EnergyBar" type="ProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+offset_right = 591.0
+grow_vertical = 0
+theme_override_styles/fill = SubResource("StyleBoxFlat_eglne")
+value = 50.0
+show_percentage = false

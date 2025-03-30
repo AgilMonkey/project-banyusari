@@ -9,9 +9,15 @@ func _ready() -> void:
 		enemy.process_mode = Node.PROCESS_MODE_DISABLED
 	
 	player.health.health_reached_zero.connect(game_over)
-	player.health.health_changed.connect(func(val):
-		$CanvasLayer/UI/HealthbarUI.set_healthbar_value(val)
-		)
+	player.health.health_changed.connect(
+		func(val):
+			$CanvasLayer/UI/HealthbarUI.set_healthbar_value(val)
+			)
+	
+	player.controller.on_dash_val_changed.connect(
+		func(val1, val2, val3):
+			$CanvasLayer/UI/DashEnergyUi.set_energy_bar_ui(val1, val2, val3)
+			)
 
 
 func _input(event: InputEvent) -> void:

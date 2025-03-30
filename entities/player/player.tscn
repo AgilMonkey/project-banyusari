@@ -1,25 +1,13 @@
-[gd_scene load_steps=20 format=3 uid="uid://dgj5e4tlh6l65"]
+[gd_scene load_steps=16 format=3 uid="uid://dgj5e4tlh6l65"]
 
-[ext_resource type="Script" uid="uid://bmhwonbtsjfg" path="res://entities/player/player.gd" id="1_qjkh3"]
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
-[ext_resource type="Script" uid="uid://dev8u4fgli83y" path="res://entities/player/components/shoulder_cam/shoulder_cam2.gd" id="2_7thud"]
-[ext_resource type="Script" uid="uid://ubkolvwgwumg" path="res://entities/player/components/shoot_projectile_to_camera.gd" id="2_rgyib"]
-[ext_resource type="Script" uid="uid://8t1puph1nn0n" path="res://entities/player/components/third_person_movement_rigidbody.gd" id="2_rkbax"]
-[ext_resource type="Script" uid="uid://bur14kb6xyx8y" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_g6k8r"]
-[ext_resource type="Script" uid="uid://pq1j7fjytppm" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_yw30f"]
-[ext_resource type="Script" uid="uid://ba6i3324bwauo" path="res://entities/player/components/3d_camera_controller.gd" id="4_g6k8r"]
+[ext_resource type="Script" uid="uid://ccxmtexq3jnpw" path="res://entities/player/player.gd" id="1_wvtmh"]
+[ext_resource type="PackedScene" uid="uid://d1ioa0w526oeu" path="res://entities/player/components/tps_camera/third_person_shoulder_camera.tscn" id="2_qiwj3"]
+[ext_resource type="PackedScene" uid="uid://y03uoupivlg2" path="res://entities/player/components/bow/bow.tscn" id="3_26q78"]
 [ext_resource type="Texture2D" uid="uid://dgbqyo2d0uqc" path="res://assets/kenney_prototype_textures/PNG/Orange/texture_09.png" id="6_boad6"]
 [ext_resource type="Script" uid="uid://cnwekxsl403tl" path="res://commons/components/health/health_component.gd" id="9_bectd"]
 [ext_resource type="PackedScene" uid="uid://dso1a8gi82pe5" path="res://commons/components/hitbox/hitbox_component.tscn" id="10_wvtmh"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yw30f"]
-friction = 0.0
-
-[sub_resource type="Resource" id="Resource_boad6"]
-script = ExtResource("3_g6k8r")
-duration = 1.0
-transition = 0
-ease = 2
+[ext_resource type="Script" uid="uid://cdl3la0h370ea" path="res://entities/player/components/controller/character_body_player_controller.gd" id="11_7thud"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ehsmr"]
 
@@ -38,59 +26,37 @@ uv1_triplanar = true
 radius = 0.1805
 height = 0.416
 
-[sub_resource type="SphereMesh" id="SphereMesh_rgyib"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wvtmh"]
 
-[node name="Player" type="RigidBody3D" groups=["player"]]
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_26q78"]
+length = 0.7
+slide_on_slope = true
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_layer = 2
 collision_mask = 17
-physics_material_override = SubResource("PhysicsMaterial_yw30f")
-lock_rotation = true
-contact_monitor = true
-max_contacts_reported = 5
-linear_damp = 0.1
-script = ExtResource("1_qjkh3")
-
-[node name="CamPivot" type="Node3D" parent="."]
-
-[node name="ShoulderSpringArm" type="SpringArm3D" parent="CamPivot"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.8, 0)
-spring_length = 1.5
-margin = 0.5
-script = ExtResource("2_7thud")
-cam_pivot = Vector2(1.5, 0.8)
-
-[node name="ZSpringArm" type="SpringArm3D" parent="CamPivot/ShoulderSpringArm"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 1.5)
-spring_length = 7.81729
-margin = 0.5
-
-[node name="PhantomCamera3D" type="Node3D" parent="CamPivot/ShoulderSpringArm/ZSpringArm"]
-transform = Transform3D(0.999978, 0, 0, 0, 0.999829, 0, 0, 0, 0.999962, 0, 0, 8)
-script = ExtResource("3_yw30f")
-tween_resource = SubResource("Resource_boad6")
-tween_on_load = false
-follow_damping = true
-follow_distance = 8.0
-spring_length = 8.0
-metadata/_custom_type_script = "uid://pq1j7fjytppm"
-
-[node name="Bow" type="Node3D" parent="CamPivot" node_paths=PackedStringArray("ball")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
-script = ExtResource("2_rgyib")
-ball = NodePath("../../Circle")
-
-[node name="3DCameraController" type="Node" parent="CamPivot"]
-script = ExtResource("4_g6k8r")
+floor_snap_length = 0.3
+platform_on_leave = 2
+script = ExtResource("1_wvtmh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_ehsmr")
 debug_color = Color(0.28866, 0.482431, 0.813503, 0.42)
 
-[node name="Gfx" type="MeshInstance3D" parent="."]
+[node name="ThirdPersonShoulderCamera" parent="." instance=ExtResource("2_qiwj3")]
+
+[node name="Bow" parent="ThirdPersonShoulderCamera" instance=ExtResource("3_26q78")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
+
+[node name="GfxPivot" type="Node3D" parent="."]
+
+[node name="Gfx" type="MeshInstance3D" parent="GfxPivot"]
+unique_name_in_owner = true
 material_override = SubResource("StandardMaterial3D_3c3w1")
 mesh = SubResource("CapsuleMesh_ehsmr")
+skeleton = NodePath("../..")
 
-[node name="ForwardHead" type="MeshInstance3D" parent="Gfx"]
+[node name="ForwardHead" type="MeshInstance3D" parent="GfxPivot/Gfx"]
 transform = Transform3D(-4.37114e-08, -1.73433, 0, 1, -7.58099e-08, 0, 0, 0, 1, -1.04476e-08, 0.488153, -0.46743)
 visible = false
 material_override = SubResource("StandardMaterial3D_rgyib")
@@ -100,18 +66,34 @@ mesh = SubResource("CapsuleMesh_g6k8r")
 collision_mask = 8
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerHitbox"]
-shape = SubResource("CapsuleShape3D_ehsmr")
-debug_color = Color(0.28866, 0.482431, 0.813503, 0.42)
+shape = SubResource("CapsuleShape3D_wvtmh")
+debug_color = Color(0.849668, 0.352599, 0.166262, 0.42)
 
-[node name="ThirdPersonMovementRigidbody" type="Node" parent="."]
-script = ExtResource("2_rkbax")
+[node name="CrouchRayCast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+target_position = Vector3(0, 2, 0)
+
+[node name="FloorStepRayForward" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.3, -0.52)
+shape = SubResource("SeparationRayShape3D_26q78")
+debug_color = Color(0.89, 0.2937, 0.35333, 0.733333)
+
+[node name="RayCheckFloor" type="RayCast3D" parent="FloorStepRayForward"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.5, 0.65)
+target_position = Vector3(0, 0, 1)
+debug_shape_custom_color = Color(0, 0, 0, 0.462745)
+
+[node name="FloorStepPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="FloorStepF" type="RemoteTransform3D" parent="FloorStepPivot"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.7, -0.52)
+remote_path = NodePath("../../FloorStepRayForward")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("9_bectd")
 
-[node name="Circle" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.49028, 0, 0)
-visible = false
-mesh = SubResource("SphereMesh_rgyib")
+[node name="CharacterBodyPlayerController" type="Node" parent="."]
+script = ExtResource("11_7thud")
 
 [connection signal="on_hit" from="PlayerHitbox" to="." method="_on_player_hitbox_on_hit"]
