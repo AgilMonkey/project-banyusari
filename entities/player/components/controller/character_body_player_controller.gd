@@ -20,6 +20,8 @@ signal on_dash_val_changed(cur_energy, max_dash, dash_req)
 @export var dash_energy_gen_in_air := 0.5
 @export var dash_energy_req := 1.0
 @export var slide_max_speed := 18.0
+@export var jump_off_wall_timer_max := 0.4
+@export var ground_pound_force = -40.0
 
 var phys_delta := 0.0
 var input_dir := Vector3.ZERO
@@ -41,7 +43,6 @@ var cur_dash_energy := 0.0
 var is_sliding := false
 var slide_dir := Vector3.ZERO
 
-@export var jump_off_wall_timer_max := 0.4
 var is_wall_running := false
 var is_jumping_off_wall := false
 var jump_off_wall_timer: float
@@ -125,6 +126,9 @@ func _physics_process(delta: float) -> void:
 		is_jumping_off_wall = false
 		dash()
 	
+	if Input.is_action_just_pressed("ground_pound") and is_in_air:
+		c_body.velocity.y = ground_pound_force
+	
 	c_body.move_and_slide()
 	
 	# INPUT STUFF
@@ -180,7 +184,7 @@ func air_horizontal_movement(delta):
 
 
 func floor_step():
-	if input_dir.length_squared() == 0:
+	if input_dir.length_squared() == 0 and not is_sliding:
 		return
 	
 	var step_normal = ray_check_floor_f.get_collision_normal()
@@ -193,8 +197,10 @@ func floor_step():
 	
 	
 	var cam_dir = cam_inp_dir
-	var cam_dir_xz = Vector3(cam_dir.x, 0, cam_dir.z)
-	var y_angle = Vector3.FORWARD.signed_angle_to(cam_dir_xz, Vector3.UP)
+	var dir_xz = Vector3(cam_dir.x, 0, cam_dir.z)
+	if is_sliding:
+		dir_xz = Vector3(c_body.velocity.x, 0, c_body.velocity.z)
+	var y_angle = Vector3.FORWARD.signed_angle_to(dir_xz, Vector3.UP)
 	floor_step_pivot.rotation.y = y_angle
 
 
