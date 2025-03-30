@@ -47,6 +47,7 @@ var is_wall_running := false
 var is_jumping_off_wall := false
 var jump_off_wall_timer: float
 var last_wall_normal: Vector3
+var can_double_jump_off_wall := false
 
 # INPUTS
 var jump_inp_just_pressed := false
@@ -94,9 +95,6 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	is_in_air = not c_body.is_on_floor()
 	
-	wall_run()
-	if is_jumping_off_wall:
-		hor_move_when_jumping_off_wall(delta)
 	
 	if slide_inp_pressed and not is_in_air:
 		slide(delta)
@@ -129,11 +127,17 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("ground_pound") and is_in_air:
 		c_body.velocity.y = ground_pound_force
 	
+	wall_run()
+	if is_jumping_off_wall:
+		hor_move_when_jumping_off_wall(delta)
+	
 	c_body.move_and_slide()
 	
 	# INPUT STUFF
 	jump_inp_just_pressed = false
 	dash_inp_just_pressed = false
+	
+
 
 func horizontal_movement(delta):
 	var vel_speed = c_body.velocity.length()
@@ -212,10 +216,6 @@ func jump():
 
 
 func force_jump():
-	var is_air_jump = jump_count > 0
-	if is_air_jump:
-		return
-	
 	c_body.velocity.y = jump_force
 	jump_count += 1
 
@@ -294,13 +294,13 @@ func gravity(delta):
 
 func landing():
 	if c_body.is_on_floor() and jump_count > 0:
+		can_double_jump_off_wall = false
 		jump_count = 0
 
 
 func wall_run():
 	if is_wall_running and jump_inp_just_pressed:
 		force_jump()
-		reset_jump_count()
 		is_wall_running = false
 		is_jumping_off_wall = true
 		return
@@ -308,6 +308,7 @@ func wall_run():
 	var on_wall_not_floor = c_body.is_on_wall() and not c_body.is_on_floor()
 	var inp_jump_is_just_pressed = Input.is_action_just_pressed("jump")
 	if inp_jump_is_just_pressed and on_wall_not_floor and not is_wall_running:
+		
 		is_wall_running = true
 		down_gravity = 5.0
 		c_body.velocity.y = 0.0
@@ -317,6 +318,10 @@ func wall_run():
 	
 	if is_wall_running:
 		hor_wall_run_move()
+		
+		if not can_double_jump_off_wall:
+			reset_jump_count()
+		can_double_jump_off_wall = true
 	
 	wall_run_visual()
 
