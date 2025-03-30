@@ -205,24 +205,15 @@ func floor_step():
 
 
 func jump():
-	var is_air_jump = jump_count > 0
-	var have_energy = cur_dash_energy >= dash_energy_req
-	if is_air_jump and not have_energy:
-		return
-	
 	var can_jump = c_body.is_on_floor() or jump_count < max_jump
 	if can_jump:
 		c_body.velocity.y = jump_force
 		jump_count += 1
-		
-		if max_jump - jump_count == 0:
-			cur_dash_energy -= dash_energy_req
 
 
 func force_jump():
 	var is_air_jump = jump_count > 0
-	var have_energy = cur_dash_energy >= dash_energy_req
-	if is_air_jump and not have_energy:
+	if is_air_jump:
 		return
 	
 	c_body.velocity.y = jump_force
