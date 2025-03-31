@@ -198,8 +198,6 @@ func floor_step():
 	else:
 		floor_step_ray_f.disabled = true
 	
-	
-	
 	var cam_dir = cam_inp_dir
 	var dir_xz = Vector3(cam_dir.x, 0, cam_dir.z)
 	if is_sliding:

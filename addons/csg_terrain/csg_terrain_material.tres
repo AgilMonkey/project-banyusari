@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=23 format=3 uid="uid://cii48014y8heu"]
 
-[ext_resource type="Shader" path="res://addons/csg_terrain/csg_terrain_shader.gdshader" id="1_ildm2"]
+[ext_resource type="Shader" uid="uid://diquyvlg8s55q" path="res://addons/csg_terrain/csg_terrain_shader.gdshader" id="1_ildm2"]
 
 [sub_resource type="Gradient" id="Gradient_yw5qy"]
 interpolation_mode = 2
@@ -107,22 +107,22 @@ shader = ExtResource("1_ildm2")
 shader_parameter/wall_underlay = 4.0
 shader_parameter/ground_scale = Vector2(0.02, 0.02)
 shader_parameter/ground_color = Color(1, 1, 1, 1)
-shader_parameter/ground_normal_strenght = 1.0
-shader_parameter/ground_roughness = 1.0
 shader_parameter/ground_albedo = SubResource("NoiseTexture2D_hbuv8")
 shader_parameter/ground_normal_map = SubResource("NoiseTexture2D_ne65t")
+shader_parameter/ground_normal_strenght = 1.0
 shader_parameter/ground_rough_map = SubResource("NoiseTexture2D_djgq6")
+shader_parameter/ground_roughness = 1.0
 shader_parameter/wall_scale = Vector2(0.01, 0.01)
 shader_parameter/wall_color = Color(1, 1, 1, 1)
-shader_parameter/wall_normal_strenght = 1.1
-shader_parameter/wall_roughness = 1.0
 shader_parameter/wall_albedo = SubResource("NoiseTexture2D_087oy")
 shader_parameter/wall_normal_map = SubResource("NoiseTexture2D_h01li")
+shader_parameter/wall_normal_strenght = 1.1
 shader_parameter/wall_rough_map = SubResource("NoiseTexture2D_38agk")
+shader_parameter/wall_roughness = 1.0
 shader_parameter/path_scale = Vector2(0.2, 0.2)
 shader_parameter/path_color = Color(1, 1, 1, 1)
-shader_parameter/path_normal_strenght = 1.0
-shader_parameter/path_roughness = 1.0
 shader_parameter/path_albedo = SubResource("NoiseTexture2D_hm7fw")
 shader_parameter/path_normal_map = SubResource("NoiseTexture2D_kfijj")
+shader_parameter/path_normal_strenght = 1.0
 shader_parameter/path_rough_map = SubResource("NoiseTexture2D_ykkun")
+shader_parameter/path_roughness = 1.0
