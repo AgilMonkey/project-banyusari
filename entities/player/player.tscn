@@ -14,7 +14,7 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ehsmr"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wvtmh"]
-ao_enabled = true
+shading_mode = 0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3c3w1"]
 albedo_texture = ExtResource("1_ulp21")
