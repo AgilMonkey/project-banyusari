@@ -50,6 +50,8 @@ debug_color = Color(0.28866, 0.482431, 0.813503, 0.42)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
 script = ExtResource("4_bectd")
 max_bow_t = 3.0
+min_bow_power = 10.0
+max_bow_power = 40.0
 
 [node name="GfxPivot" type="Node3D" parent="."]
 
