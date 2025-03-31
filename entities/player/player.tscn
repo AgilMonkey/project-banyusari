@@ -53,6 +53,8 @@ max_bow_t = 3.0
 min_bow_power = 10.0
 max_bow_power = 40.0
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ThirdPersonShoulderCamera/Bow"]
+
 [node name="GfxPivot" type="Node3D" parent="."]
 
 [node name="Gfx" type="MeshInstance3D" parent="GfxPivot"]

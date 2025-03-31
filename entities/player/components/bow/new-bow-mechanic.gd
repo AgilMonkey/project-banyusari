@@ -1,8 +1,10 @@
 extends Node3D
 
 # TODO
-# 1. Value for how long input is pressed
-# 2. Min power and max power
+# - Value for how long input is pressed
+# - Min power and max power
+# - Get the forward point
+# - Add line
 
 @export var max_bow_t := 3.0
 @export var min_bow_power := 10.0
