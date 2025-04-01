@@ -1,10 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://bsyrw8j3wfim2"]
+[gd_scene load_steps=4 format=3 uid="uid://bsyrw8j3wfim2"]
 
 [ext_resource type="Script" uid="uid://dgthgva82wb71" path="res://other/testing/test_3d_line/3d_line.gd" id="1_jqe7d"]
+[ext_resource type="Script" uid="uid://bs3be4o1y8d4r" path="res://other/testing/test_3d_line/line_3d.gd" id="2_dqtas"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dqtas"]
+shading_mode = 0
 
 [node name="Test3DLine" type="Node3D"]
 
 [node name="3DLine" type="Node3D" parent="."]
 script = ExtResource("1_jqe7d")
-thickness = null
 verts = PackedVector3Array(0, 0, 0, 0, 0, 0)
+
+[node name="Line3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_dqtas")
+script = ExtResource("2_dqtas")
+points = PackedVector3Array(0, 0, 0, 1, 1, 1)
+metadata/_custom_type_script = "uid://bs3be4o1y8d4r"
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.759247, 0.315061, -0.569456, 0, 0.875006, 0.484112, 0.650802, -0.367561, 0.664346, -1.67021, 1.4199, 1.94852)
