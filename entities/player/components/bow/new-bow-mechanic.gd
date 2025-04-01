@@ -43,7 +43,7 @@ func _process(delta: float) -> void:
 	
 	bow_look_at_forward_cam()
 	
-	var sim_verts = get_simulation_verts(-basis.z * 100.0, 24.0)
+	var sim_verts = get_simulation_verts(-basis.z * 50.0, 12.0)
 	
 	$Line3D.points = sim_verts
 	$Line3D.rebuild()

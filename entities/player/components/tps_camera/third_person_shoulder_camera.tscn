@@ -1,15 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://d1ioa0w526oeu"]
+[gd_scene load_steps=5 format=3 uid="uid://d1ioa0w526oeu"]
 
 [ext_resource type="Script" uid="uid://dev8u4fgli83y" path="res://entities/player/components/tps_camera/shoulder_cam/shoulder_cam2.gd" id="1_wm1rl"]
 [ext_resource type="Script" uid="uid://pq1j7fjytppm" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="2_ncrgt"]
-[ext_resource type="Script" uid="uid://bur14kb6xyx8y" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_dbh3w"]
 [ext_resource type="Script" uid="uid://ba6i3324bwauo" path="res://entities/player/components/tps_camera/3d_camera_controller.gd" id="5_7qmu5"]
 
-[sub_resource type="Resource" id="Resource_boad6"]
-script = ExtResource("3_dbh3w")
-duration = 1.0
-transition = 0
-ease = 2
+[sub_resource type="SphereMesh" id="SphereMesh_vkqs6"]
 
 [node name="ThirdPersonShoulderCamera" type="Node3D"]
 script = ExtResource("1_wm1rl")
@@ -25,9 +20,11 @@ spring_length = 7.8867
 margin = 0.5
 
 [node name="PhantomCamera3D" type="Node3D" parent="ShoulderSpringArm/ZSpringArm"]
+process_priority = 500
+process_physics_priority = 500
 transform = Transform3D(0.999978, 0, 0, 0, 0.999829, 0, 0, 0, 0.999962, 0, 0, 8)
 script = ExtResource("2_ncrgt")
-tween_resource = SubResource("Resource_boad6")
+priority = 10
 tween_on_load = false
 follow_damping = true
 follow_distance = 8.0
@@ -36,3 +33,8 @@ metadata/_custom_type_script = "uid://pq1j7fjytppm"
 
 [node name="3DCameraController" type="Node" parent="."]
 script = ExtResource("5_7qmu5")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -11.3468)
+mesh = SubResource("SphereMesh_vkqs6")
+skeleton = NodePath("")

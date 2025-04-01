@@ -46,9 +46,9 @@ shape = SubResource("CapsuleShape3D_ehsmr")
 debug_color = Color(0.28866, 0.482431, 0.813503, 0.42)
 
 [node name="ThirdPersonShoulderCamera" parent="." instance=ExtResource("2_qiwj3")]
+editor_description = "Test"
 
 [node name="Bow" parent="ThirdPersonShoulderCamera" instance=ExtResource("3_26q78")]
-physics_interpolation_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
 script = ExtResource("4_bectd")
 max_bow_t = 3.0
