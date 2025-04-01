@@ -235,7 +235,6 @@ font_size = 32
 script = ExtResource("1_gu74f")
 
 [node name="MainCamera" type="Camera3D" parent="."]
-physics_interpolation_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.029, 2.90074, 37.8899)
 near = 0.001
 
