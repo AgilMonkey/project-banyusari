@@ -1,8 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://d1ioa0w526oeu"]
+[gd_scene load_steps=7 format=3 uid="uid://d1ioa0w526oeu"]
 
 [ext_resource type="Script" uid="uid://dev8u4fgli83y" path="res://entities/player/components/tps_camera/shoulder_cam/shoulder_cam2.gd" id="1_wm1rl"]
 [ext_resource type="Script" uid="uid://pq1j7fjytppm" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="2_ncrgt"]
+[ext_resource type="Script" uid="uid://bur14kb6xyx8y" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_dbh3w"]
 [ext_resource type="Script" uid="uid://ba6i3324bwauo" path="res://entities/player/components/tps_camera/3d_camera_controller.gd" id="5_7qmu5"]
+
+[sub_resource type="Resource" id="Resource_8uyvd"]
+script = ExtResource("3_dbh3w")
+duration = 1.0
+transition = 0
+ease = 2
 
 [sub_resource type="SphereMesh" id="SphereMesh_vkqs6"]
 
@@ -25,16 +32,18 @@ process_physics_priority = 500
 transform = Transform3D(0.999978, 0, 0, 0, 0.999829, 0, 0, 0, 0.999962, 0, 0, 8)
 script = ExtResource("2_ncrgt")
 priority = 10
+tween_resource = SubResource("Resource_8uyvd")
 tween_on_load = false
 follow_damping = true
 follow_distance = 8.0
 spring_length = 8.0
 metadata/_custom_type_script = "uid://pq1j7fjytppm"
 
-[node name="3DCameraController" type="Node" parent="."]
-script = ExtResource("5_7qmu5")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -11.3468)
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="ShoulderSpringArm/ZSpringArm/PhantomCamera3D"]
+physics_interpolation_mode = 2
+transform = Transform3D(1.00002, 0, 0, 0, 1.00017, 0, 0, 0, 1.00004, -1.20003, -0.600103, -19.3475)
 mesh = SubResource("SphereMesh_vkqs6")
 skeleton = NodePath("")
+
+[node name="3DCameraController" type="Node" parent="."]
+script = ExtResource("5_7qmu5")
