@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bsyrw8j3wfim2"]
+
+[ext_resource type="Script" uid="uid://dgthgva82wb71" path="res://other/testing/test_3d_line/3d_line.gd" id="1_jqe7d"]
+
+[node name="Test3DLine" type="Node3D"]
+
+[node name="3DLine" type="Node3D" parent="."]
+script = ExtResource("1_jqe7d")
+thickness = null
+verts = PackedVector3Array(0, 0, 0, 0, 0, 0)

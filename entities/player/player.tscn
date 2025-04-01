@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dgj5e4tlh6l65"]
+[gd_scene load_steps=21 format=3 uid="uid://dgj5e4tlh6l65"]
 
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
 [ext_resource type="Script" uid="uid://ccxmtexq3jnpw" path="res://entities/player/player.gd" id="1_wvtmh"]
@@ -15,6 +15,12 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wvtmh"]
 shading_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7thud"]
+shading_mode = 0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_a1qjk"]
+radius = 0.02
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3c3w1"]
 albedo_texture = ExtResource("1_ulp21")
@@ -62,6 +68,11 @@ bow_forward_range = 100.0
 material_override = SubResource("StandardMaterial3D_wvtmh")
 cast_shadow = 0
 script = ExtResource("5_wvtmh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ThirdPersonShoulderCamera/Bow/BowLine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+material_override = SubResource("StandardMaterial3D_7thud")
+mesh = SubResource("CapsuleMesh_a1qjk")
 
 [node name="GfxPivot" type="Node3D" parent="."]
 
