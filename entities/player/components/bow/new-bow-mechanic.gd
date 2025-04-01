@@ -37,9 +37,33 @@ func _process(delta: float) -> void:
 	if inp_hold_bow:
 		bow_hold_t += delta
 	
-	#bow_line.verts = PackedVector3Array([global_position, get_bow_direction()])
+	var forward_bit_up = -basis.z
+	var sim_verts = get_simulation_verts(forward_bit_up * 20.0, 24.0)
+	
+	$Line3D.points = sim_verts
+	$Line3D.rebuild()
 
 
 func get_bow_direction() -> Vector3:
 	var camera_forward_range := cur_cam.global_position + (-cur_cam.transform.basis.z * bow_forward_range) 
 	return camera_forward_range - global_position
+
+
+func get_simulation_verts(force: Vector3, gravity: float) -> PackedVector3Array:
+	var sim_verts: PackedVector3Array = PackedVector3Array()
+	
+	var sim_delta = 0.05
+	var velocity = force
+	var sim_position = Vector3.ZERO
+	
+	sim_verts.append(sim_position)
+	
+	var simulation_range = 200  # Divisible by 20
+	
+	for n in simulation_range - 1:
+		sim_position += velocity * sim_delta
+		velocity.y -= gravity * sim_delta
+		
+		sim_verts.append(sim_position)
+	
+	return sim_verts
