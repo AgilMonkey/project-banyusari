@@ -1,5 +1,7 @@
 extends Node3D
 
+## @deprecated
+
 # TODO
 # - Value for how long input is pressed
 # - Min power and max power

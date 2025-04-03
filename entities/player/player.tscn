@@ -1,11 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://dgj5e4tlh6l65"]
+[gd_scene load_steps=16 format=3 uid="uid://dgj5e4tlh6l65"]
 
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
 [ext_resource type="Script" uid="uid://ccxmtexq3jnpw" path="res://entities/player/player.gd" id="1_wvtmh"]
 [ext_resource type="PackedScene" uid="uid://d1ioa0w526oeu" path="res://entities/player/components/tps_camera/third_person_shoulder_camera.tscn" id="2_qiwj3"]
-[ext_resource type="PackedScene" uid="uid://y03uoupivlg2" path="res://entities/player/components/bow/bow.tscn" id="3_26q78"]
-[ext_resource type="Script" uid="uid://beab3psako5i0" path="res://entities/player/components/bow/new-bow-mechanic.gd" id="4_bectd"]
-[ext_resource type="Script" uid="uid://c8rainoecpyie" path="res://addons/lines_and_trails_3d/line_3d.gd" id="5_wvtmh"]
+[ext_resource type="Script" uid="uid://coetyt76vyeiq" path="res://entities/player/components/bow/weapon_bow.gd" id="3_26q78"]
 [ext_resource type="Texture2D" uid="uid://dgbqyo2d0uqc" path="res://assets/kenney_prototype_textures/PNG/Orange/texture_09.png" id="6_boad6"]
 [ext_resource type="Script" uid="uid://cnwekxsl403tl" path="res://commons/components/health/health_component.gd" id="9_bectd"]
 [ext_resource type="PackedScene" uid="uid://dso1a8gi82pe5" path="res://commons/components/hitbox/hitbox_component.tscn" id="10_wvtmh"]
@@ -48,19 +46,9 @@ debug_color = Color(0.28866, 0.482431, 0.813503, 0.42)
 [node name="ThirdPersonShoulderCamera" parent="." instance=ExtResource("2_qiwj3")]
 editor_description = "Test"
 
-[node name="Bow" parent="ThirdPersonShoulderCamera" instance=ExtResource("3_26q78")]
+[node name="WeaponBow" type="Node3D" parent="ThirdPersonShoulderCamera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
-script = ExtResource("4_bectd")
-max_bow_t = 3.0
-min_bow_power = 10.0
-max_bow_power = 40.0
-bow_forward_range = 100.0
-
-[node name="Line3D" type="MeshInstance3D" parent="ThirdPersonShoulderCamera/Bow"]
-cast_shadow = 0
-script = ExtResource("5_wvtmh")
-width = 0.3
-metadata/_custom_type_script = "uid://c8rainoecpyie"
+script = ExtResource("3_26q78")
 
 [node name="GfxPivot" type="Node3D" parent="."]
 

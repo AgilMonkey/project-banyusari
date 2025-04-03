@@ -12,6 +12,7 @@ config_version=5
 
 config/name="Projek Banyusari"
 config/version="0.4"
+config/tags=PackedStringArray("project")
 run/main_scene="uid://oab2qeo6wun8"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
