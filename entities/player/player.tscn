@@ -51,9 +51,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
 script = ExtResource("3_26q78")
 
 [node name="RayCast3D" type="RayCast3D" parent="ThirdPersonShoulderCamera/WeaponBow"]
+enabled = false
 target_position = Vector3(0, 0, -1000)
-collision_mask = 9
-debug_shape_custom_color = Color(1, 0, 0.233333, 1)
+collision_mask = 5
+collide_with_areas = true
 
 [node name="GfxPivot" type="Node3D" parent="."]
 

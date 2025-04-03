@@ -22,7 +22,7 @@ radius = 0.52
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kngvk"]
 
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_cv1aj"]
-length = 0.5
+length = 0.8
 
 [node name="Musuh" type="CharacterBody3D" groups=["enemy"]]
 collision_layer = 16
@@ -47,7 +47,9 @@ shape = SubResource("CapsuleShape3D_cv1aj")
 debug_color = Color(0.875324, 0.308566, 0.404976, 0.42)
 
 [node name="EnemyHitbox" parent="." instance=ExtResource("3_kngvk")]
+collision_layer = 4
 collision_mask = 4
+monitorable = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyHitbox"]
 shape = SubResource("CapsuleShape3D_kngvk")
@@ -63,7 +65,7 @@ script = ExtResource("4_5be2r")
 script = ExtResource("6_cv1aj")
 
 [node name="FloorStepUp" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.5, -0.55)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.2, -0.55)
 shape = SubResource("SeparationRayShape3D_cv1aj")
 
 [connection signal="health_reached_zero" from="HealthComponent" to="." method="_on_health_component_health_reached_zero"]
