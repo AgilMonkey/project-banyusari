@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dgj5e4tlh6l65"]
+[gd_scene load_steps=19 format=3 uid="uid://dgj5e4tlh6l65"]
 
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
 [ext_resource type="Script" uid="uid://ccxmtexq3jnpw" path="res://entities/player/player.gd" id="1_wvtmh"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://coetyt76vyeiq" path="res://entities/player/components/bow/weapon_bow.gd" id="3_26q78"]
 [ext_resource type="Script" uid="uid://c8kpnmj7hgpki" path="res://entities/player/shape_cast_3d.gd" id="4_bectd"]
 [ext_resource type="Texture2D" uid="uid://dgbqyo2d0uqc" path="res://assets/kenney_prototype_textures/PNG/Orange/texture_09.png" id="6_boad6"]
+[ext_resource type="Script" uid="uid://d1nisk1k00vi7" path="res://entities/player/player_rotate_anim.gd" id="7_wvtmh"]
 [ext_resource type="Script" uid="uid://cnwekxsl403tl" path="res://commons/components/health/health_component.gd" id="9_bectd"]
 [ext_resource type="PackedScene" uid="uid://dso1a8gi82pe5" path="res://commons/components/hitbox/hitbox_component.tscn" id="10_wvtmh"]
 [ext_resource type="Script" uid="uid://cdl3la0h370ea" path="res://entities/player/components/controller/character_body_player_controller.gd" id="11_7thud"]
@@ -86,6 +87,11 @@ skeleton = NodePath("../..")
 transform = Transform3D(-4.37114e-08, -1.73433, 0, 1, -7.58099e-08, 0, 0, 0, 1, -1.04476e-08, 0.488153, -0.46743)
 material_override = SubResource("StandardMaterial3D_rgyib")
 mesh = SubResource("CapsuleMesh_g6k8r")
+
+[node name="PlayerRotateAnim" type="Node" parent="GfxPivot" node_paths=PackedStringArray("character", "controller")]
+script = ExtResource("7_wvtmh")
+character = NodePath("../..")
+controller = NodePath("../../CharacterBodyPlayerController")
 
 [node name="PlayerHitbox" parent="." instance=ExtResource("10_wvtmh")]
 collision_mask = 8

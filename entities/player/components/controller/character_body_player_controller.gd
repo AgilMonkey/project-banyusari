@@ -353,16 +353,16 @@ func wall_run_visual():
 		var wall_normal_xz = Vector3(wall_normal.x, 0, wall_normal.z)
 		var wall_forward = wall_normal_xz.cross(Vector3.UP)
 		var forward_or_backward_wall = -1 if sign(wall_forward.dot(vel_xz)) < 0 else 1
+		wall_forward *= forward_or_backward_wall
 		
 		var hor_rot = atan2(wall_forward.x, wall_forward.z) - PI
 		gfx_pivot.rotation.y = hor_rot
 		
 		var cross = wall_normal.cross(wall_forward)
-		var is_left_right = absf(cross.y)
+		var is_left_right = clampf(-cross.y, -1.0, 1.0)
 		gfx_pivot.rotation.z = deg_to_rad(15 * is_left_right)
 		return
 	
-	gfx_pivot.rotation.y = 0
 	gfx_pivot.rotation.z = 0
 
 
