@@ -62,6 +62,7 @@ simplify_path = true
 script = ExtResource("4_5be2r")
 
 [node name="FollowPlayer" type="Node" parent="."]
+physics_interpolation_mode = 2
 script = ExtResource("6_cv1aj")
 
 [node name="FloorStepUp" type="CollisionShape3D" parent="."]
