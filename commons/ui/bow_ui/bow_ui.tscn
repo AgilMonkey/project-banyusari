@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://djpmw3b3dec5q" path="res://commons/ui/bow_ui/bow_ui.gd" id="1_0hbjx"]
 [ext_resource type="Texture2D" uid="uid://bmibw5i7esv3o" path="res://assets/Basic 2D Shapes Primitive 128px/grey soft/ShapeA (2).png" id="2_1elty"]
-[ext_resource type="Texture2D" uid="uid://dtkr15wesfbfn" path="res://assets/Basic 2D Shapes Primitive 128px/grey soft/Gear (7).png" id="2_2v56y"]
+[ext_resource type="Texture2D" uid="uid://biwgmgn3blcog" path="res://assets/Basic 2D Shapes Primitive 128px/grey soft/Ring.png" id="3_x6mpb"]
 
 [node name="BowUi" type="Control"]
 layout_mode = 3
@@ -23,13 +23,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -64.0
-offset_right = 64.0
-offset_bottom = 64.0
+offset_left = -48.0
+offset_top = -48.0
+offset_right = 48.0
+offset_bottom = 48.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_2v56y")
+texture = ExtResource("3_x6mpb")
+expand_mode = 1
 
 [node name="BowHoldProgress" type="TextureProgressBar" parent="Clip"]
 unique_name_in_owner = true
