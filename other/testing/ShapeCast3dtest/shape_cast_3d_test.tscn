@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvrq6x2t00ung"]
+
+[ext_resource type="Script" uid="uid://bnqpd1pf7fgve" path="res://other/testing/ShapeCast3dtest/shape_cast_3d.gd" id="1_ry2hy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3kaf3"]
+size = Vector3(4.36157, 4.41577, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ry2hy"]
+size = Vector3(4.36157, 4.41577, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_3kaf3"]
+
+[node name="ShapeCast3dTest" type="Node3D"]
+
+[node name="Stuff1" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.817509, -3.30377)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Stuff1"]
+shape = SubResource("BoxShape3D_3kaf3")
+
+[node name="Stuff2" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.817509, -5.731)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Stuff2"]
+shape = SubResource("BoxShape3D_3kaf3")
+
+[node name="Stuff3" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.817509, -7.98736)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Stuff3"]
+shape = SubResource("BoxShape3D_3kaf3")
+
+[node name="Wall" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.817509, -11)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall"]
+shape = SubResource("BoxShape3D_ry2hy")
+debug_color = Color(0.889671, 0.268976, 0.478346, 0.42)
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, -0.000400777, 1.49836e-05, 1.52414e-05, 0.000695456, -1, 0.000400767, 1, 0.000695462, 0, 0.817509, 0)
+shape = SubResource("CylinderShape3D_3kaf3")
+target_position = Vector3(0, -19.745, 0)
+collide_with_areas = true
+script = ExtResource("1_ry2hy")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.24365, -0.490753, 0.836538, 0, 0.862532, 0.506002, -0.969863, -0.123287, 0.210156, 11.1722, 6.70465, -1.4872)

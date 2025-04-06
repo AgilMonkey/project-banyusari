@@ -1,15 +1,40 @@
-[gd_scene load_steps=16 format=3 uid="uid://dgj5e4tlh6l65"]
+[gd_scene load_steps=25 format=3 uid="uid://dgj5e4tlh6l65"]
 
 [ext_resource type="Texture2D" uid="uid://sg6qu40fxnbe" path="res://assets/kenney_prototype_textures/PNG/Light/texture_03.png" id="1_ulp21"]
 [ext_resource type="Script" uid="uid://ccxmtexq3jnpw" path="res://entities/player/player.gd" id="1_wvtmh"]
 [ext_resource type="PackedScene" uid="uid://d1ioa0w526oeu" path="res://entities/player/components/tps_camera/third_person_shoulder_camera.tscn" id="2_qiwj3"]
-[ext_resource type="PackedScene" uid="uid://y03uoupivlg2" path="res://entities/player/components/bow/bow.tscn" id="3_26q78"]
+[ext_resource type="Script" uid="uid://coetyt76vyeiq" path="res://entities/player/components/bow/weapon_bow.gd" id="3_26q78"]
+[ext_resource type="Script" uid="uid://c8kpnmj7hgpki" path="res://entities/player/shape_cast_3d.gd" id="4_bectd"]
+[ext_resource type="Script" uid="uid://8v2jc62k75h" path="res://entities/player/bow_visual_pivot.gd" id="5_7thud"]
 [ext_resource type="Texture2D" uid="uid://dgbqyo2d0uqc" path="res://assets/kenney_prototype_textures/PNG/Orange/texture_09.png" id="6_boad6"]
+[ext_resource type="Script" uid="uid://d1nisk1k00vi7" path="res://entities/player/player_rotate_anim.gd" id="7_wvtmh"]
 [ext_resource type="Script" uid="uid://cnwekxsl403tl" path="res://commons/components/health/health_component.gd" id="9_bectd"]
 [ext_resource type="PackedScene" uid="uid://dso1a8gi82pe5" path="res://commons/components/hitbox/hitbox_component.tscn" id="10_wvtmh"]
 [ext_resource type="Script" uid="uid://cdl3la0h370ea" path="res://entities/player/components/controller/character_body_player_controller.gd" id="11_7thud"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ehsmr"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_26q78"]
+height = 1000.0
+radius = 0.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a1qjk"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wvtmh"]
+albedo_color = Color(0, 0.901961, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_wvtmh"]
+radius = 0.2
+height = 0.4
+radial_segments = 16
+rings = 8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7thud"]
+albedo_color = Color(0, 0.901961, 1, 1)
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_wvtmh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3c3w1"]
 albedo_texture = ExtResource("1_ulp21")
@@ -44,9 +69,49 @@ shape = SubResource("CapsuleShape3D_ehsmr")
 debug_color = Color(0.28866, 0.482431, 0.813503, 0.42)
 
 [node name="ThirdPersonShoulderCamera" parent="." instance=ExtResource("2_qiwj3")]
+editor_description = "Test"
 
-[node name="Bow" parent="ThirdPersonShoulderCamera" instance=ExtResource("3_26q78")]
+[node name="WeaponBow" type="Node3D" parent="ThirdPersonShoulderCamera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
+script = ExtResource("3_26q78")
+
+[node name="RayCast3D" type="RayCast3D" parent="ThirdPersonShoulderCamera/WeaponBow"]
+enabled = false
+target_position = Vector3(0, 0, -1000)
+collision_mask = 5
+collide_with_areas = true
+
+[node name="RayCast3DWall" type="RayCast3D" parent="ThirdPersonShoulderCamera/WeaponBow"]
+enabled = false
+target_position = Vector3(0, 0, -1000)
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="ThirdPersonShoulderCamera/WeaponBow/RayCast3DWall"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -500)
+shape = SubResource("CylinderShape3D_26q78")
+target_position = Vector3(0, 0, 0)
+collision_mask = 5
+collide_with_areas = true
+debug_shape_custom_color = Color(1, 0, 0.0166664, 1)
+script = ExtResource("4_bectd")
+
+[node name="BowVisualPivot" type="Node3D" parent="ThirdPersonShoulderCamera/WeaponBow" node_paths=PackedStringArray("weapon_bow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.6)
+script = ExtResource("5_7thud")
+default_material = SubResource("StandardMaterial3D_a1qjk")
+normal_color = Color(0, 0.966667, 1, 1)
+perfect_color = Color(1, 0.933333, 0, 1)
+charged_color = Color(0, 0.55, 1, 1)
+weapon_bow = NodePath("..")
+
+[node name="BowVisualMesh" type="MeshInstance3D" parent="ThirdPersonShoulderCamera/WeaponBow/BowVisualPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.3)
+material_override = SubResource("StandardMaterial3D_wvtmh")
+mesh = SubResource("SphereMesh_wvtmh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ThirdPersonShoulderCamera/WeaponBow/BowVisualPivot/BowVisualMesh"]
+transform = Transform3D(-6.55671e-09, -2.4, 0, 0.15, -1.04907e-07, 0, 0, 0, 0.15, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_7thud")
+mesh = SubResource("TubeTrailMesh_wvtmh")
 
 [node name="GfxPivot" type="Node3D" parent="."]
 
@@ -58,9 +123,13 @@ skeleton = NodePath("../..")
 
 [node name="ForwardHead" type="MeshInstance3D" parent="GfxPivot/Gfx"]
 transform = Transform3D(-4.37114e-08, -1.73433, 0, 1, -7.58099e-08, 0, 0, 0, 1, -1.04476e-08, 0.488153, -0.46743)
-visible = false
 material_override = SubResource("StandardMaterial3D_rgyib")
 mesh = SubResource("CapsuleMesh_g6k8r")
+
+[node name="PlayerRotateAnim" type="Node" parent="GfxPivot" node_paths=PackedStringArray("character", "controller")]
+script = ExtResource("7_wvtmh")
+character = NodePath("../..")
+controller = NodePath("../../CharacterBodyPlayerController")
 
 [node name="PlayerHitbox" parent="." instance=ExtResource("10_wvtmh")]
 collision_mask = 8

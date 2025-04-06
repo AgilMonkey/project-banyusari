@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://bur14kb6xyx8y" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_dbh3w"]
 [ext_resource type="Script" uid="uid://ba6i3324bwauo" path="res://entities/player/components/tps_camera/3d_camera_controller.gd" id="5_7qmu5"]
 
-[sub_resource type="Resource" id="Resource_boad6"]
+[sub_resource type="Resource" id="Resource_8uyvd"]
 script = ExtResource("3_dbh3w")
 duration = 1.0
 transition = 0
@@ -25,9 +25,12 @@ spring_length = 7.8867
 margin = 0.5
 
 [node name="PhantomCamera3D" type="Node3D" parent="ShoulderSpringArm/ZSpringArm"]
+process_priority = 500
+process_physics_priority = 500
 transform = Transform3D(0.999978, 0, 0, 0, 0.999829, 0, 0, 0, 0.999962, 0, 0, 8)
 script = ExtResource("2_ncrgt")
-tween_resource = SubResource("Resource_boad6")
+priority = 10
+tween_resource = SubResource("Resource_8uyvd")
 tween_on_load = false
 follow_damping = true
 follow_distance = 8.0

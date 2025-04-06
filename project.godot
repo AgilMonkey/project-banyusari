@@ -12,6 +12,7 @@ config_version=5
 
 config/name="Projek Banyusari"
 config/version="0.4"
+config/tags=PackedStringArray("project")
 run/main_scene="uid://oab2qeo6wun8"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
@@ -31,7 +32,7 @@ window/vsync/vsync_mode=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/csg_terrain/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/script-ide/plugin.cfg")
+enabled=PackedStringArray("res://addons/csg_terrain/plugin.cfg", "res://addons/lines_and_trails_3d/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/script-ide/plugin.cfg")
 
 [global_group]
 
@@ -122,6 +123,7 @@ ground_pound={
 
 [physics]
 
+common/physics_ticks_per_second=80
 3d/physics_engine="Jolt Physics"
 jolt_physics_3d/simulation/areas_detect_static_bodies=true
 3d/default_gravity=25.0

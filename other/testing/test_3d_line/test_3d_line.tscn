@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://bsyrw8j3wfim2"]
+
+[ext_resource type="Script" uid="uid://dgthgva82wb71" path="res://other/testing/test_3d_line/3d_line.gd" id="1_jqe7d"]
+[ext_resource type="Script" uid="uid://c8rainoecpyie" path="res://addons/lines_and_trails_3d/line_3d.gd" id="2_dqtas"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_dqtas"]
+
+[node name="Test3DLine" type="Node3D"]
+
+[node name="3DLine" type="Node3D" parent="."]
+script = ExtResource("1_jqe7d")
+verts = PackedVector3Array(0, 0, 0, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.528405, -0.0154948, -0.848851, 0, 0.999833, -0.0182508, 0.848992, 0.00964384, 0.528317, -1.43022, 0.257656, 2.13577)
+
+[node name="Line3D" type="MeshInstance3D" parent="."]
+script = ExtResource("2_dqtas")
+width = 0.315
+color = Color(1, 0, 0, 1)
+points = PackedVector3Array(0, 0, 0, 2, 3, 0, 4, 2.5, 0, 6, 0.5, 0)
+metadata/_custom_type_script = "uid://c8rainoecpyie"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2.95627, 0, 0, 0, 2.08533, 3.63364, 2.69734, -0.185693)
+mesh = SubResource("BoxMesh_dqtas")
+skeleton = NodePath("../Line3D")
