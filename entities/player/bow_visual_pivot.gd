@@ -9,7 +9,7 @@ extends Node3D
 
 @export var weapon_bow: Node3D
 
-@onready var arrow_trail: PackedScene = preload("res://entities/player/components/bow/arrow_trail.tscn")
+@onready var arrow_trail: PackedScene = preload("uid://bf5v1j8tkokci")
 @onready var main_scene: Node3D = Utility.find_type(get_tree().get_root(), Node3D)
 
 
@@ -17,6 +17,13 @@ func _ready() -> void:
 	weapon_bow.on_cast_normal_shot.connect(cast_normal_shot)
 	weapon_bow.on_cast_perfect_shot.connect(cast_perfect_shot)
 	weapon_bow.on_cast_charged_shot.connect(cast_charged_shot)
+	
+	# First time instantiate to avoid lag
+	# Weird hack lmfao
+	await get_tree().process_frame
+	var trans: Transform3D = Transform3D.IDENTITY
+	trans.origin = Vector3.ONE * 5000.0
+	cast_normal_shot(trans, 1.0)
 
 
 func cast_normal_shot(_global_transform: Transform3D, range: float):
